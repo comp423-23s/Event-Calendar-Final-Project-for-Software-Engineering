@@ -12,8 +12,7 @@ import { Workshop, WorkshopListService } from '../workshop-list.service';
 export class WorkshopListComponent {
 
   //public workshops$: Workshop
-  constructor(
-  ) {
+  constructor(protected workshopService: WorkshopListService) {
     //this.workshops$ = WorkshopListService.getWorkshop();
 
   }
@@ -28,4 +27,7 @@ export class WorkshopListComponent {
     //resolve: { profile: profileResolver }
   };
 
+  getWorkshop(){
+    return this.workshopService.getWorkshop();
+  }
 }

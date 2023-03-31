@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 export interface Workshop {
   id: number;
@@ -10,12 +11,12 @@ export interface Workshop {
 })
 export class WorkshopListService {
 
-  constructor(workshopservice: WorkshopListService) { 
+  constructor(protected http: HttpClient) { 
     
   }
 
   getWorkshop(){
-    let sampleWorkshop = [1, "This is a workshop"];
-    return sampleWorkshop;
+    //returns ? from workshop
+    return this.http.get<Workshop>("/api/profile");
   }
 }
