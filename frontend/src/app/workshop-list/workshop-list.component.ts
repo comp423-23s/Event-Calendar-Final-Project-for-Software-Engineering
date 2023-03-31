@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
+import { WorkshopService, Workshop } from '../workshop-list.service';
 
 
 @Component({
