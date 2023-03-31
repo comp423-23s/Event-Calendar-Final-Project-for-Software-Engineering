@@ -10,5 +10,12 @@ export interface Workshop {
 })
 export class WorkshopListService {
 
-  constructor() { }
+  constructor(workshopservice: WorkshopListService) { 
+    
+  }
+
+  getWorkshop(){
+    let sampleWorkshop = [1, "This is a workshop"];
+    return sampleWorkshop;
+  }
 }

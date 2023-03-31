@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
-import { WorkshopService, Workshop } from '../workshop-list.service';
+import { Workshop, WorkshopListService } from '../workshop-list.service';
 
 
 @Component({
@@ -10,6 +10,15 @@ import { WorkshopService, Workshop } from '../workshop-list.service';
   styleUrls: ['./workshop-list.component.css']
 })
 export class WorkshopListComponent {
+
+  //public workshops$: Workshop
+  constructor(
+  ) {
+    //this.workshops$ = WorkshopListService.getWorkshop();
+
+  }
+
+  //
 
   public static Route: Route = {
     path: 'workshop-list',
