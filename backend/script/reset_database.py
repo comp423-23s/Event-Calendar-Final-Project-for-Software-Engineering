@@ -65,6 +65,6 @@ with Session(engine) as session:
 with Session(engine) as session:
     from .dev_data import workshops
     to_entity = entities.WorkshopEntity.from_model
-    session.add_all([to_entity(model) for model in workshop.models])
-    session.execute(text(f'ALTER SEQUENCE {entities.WorkshopEntity.__table__}_id_seq RESTART WITH {len(workshop.models) + 1}'))
+    session.add_all([to_entity(model) for model in workshops.models])
+    session.execute(text(f'ALTER SEQUENCE {entities.WorkshopEntity.__table__}_id_seq RESTART WITH {len(workshops.models) + 1}'))
     session.commit()

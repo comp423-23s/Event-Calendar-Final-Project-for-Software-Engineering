@@ -7,6 +7,6 @@ from ..services.workshop import WorkshopService
 api = APIRouter(prefix="/api/workshop")
 
 
-@api.get("")
-def search(workshop_svc: WorkshopService = Depends()) -> str:
-    return workshop_svc.get()
+@api.get("", response_model=list[Workshop], tags=['Workshops'])
+def list_workshops(workshop_svc: WorkshopService = Depends()) -> list[Workshop]:
+    return workshop_svc.list()
