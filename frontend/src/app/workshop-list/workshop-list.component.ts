@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
 import { Workshop, WorkshopListService } from '../workshop-list.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -11,10 +12,10 @@ import { Workshop, WorkshopListService } from '../workshop-list.service';
 })
 export class WorkshopListComponent {
 
-  //public workshops$: Workshop
+  public workshops$: Observable<Workshop[]>;
+  
   constructor(protected workshopService: WorkshopListService) {
-    //this.workshops$ = WorkshopListService.getWorkshop();
-
+    this.workshops$ = workshopService.getWorkshop();
   }
 
   //
@@ -27,7 +28,7 @@ export class WorkshopListComponent {
     //resolve: { profile: profileResolver }
   };
 
-  getWorkshop(){
-    return this.workshopService.getWorkshop();
+  getWorkshops(){
+    this.workshops$ = this.workshopService.getWorkshop();
   }
 }
