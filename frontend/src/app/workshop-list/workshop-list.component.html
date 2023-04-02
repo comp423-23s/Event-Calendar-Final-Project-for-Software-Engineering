@@ -1,1 +1,8 @@
-<p>workshop-list works!</p>
+<h2>Workshops</h2>
+
+<mat-list>
+    <mat-list-item *ngFor="let workshop of workshops$ | async">
+        <h3 matListItemTitle>{{workshop.title}}</h3>
+        <p matListItemLine>{{workshop.id}}</p>
+    </mat-list-item>
+</mat-list>

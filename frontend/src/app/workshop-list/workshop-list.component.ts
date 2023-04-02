@@ -4,7 +4,6 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { Workshop, WorkshopListService } from '../workshop-list.service';
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'app-workshop-list',
   templateUrl: './workshop-list.component.html',
@@ -13,9 +12,11 @@ import { Observable } from 'rxjs';
 export class WorkshopListComponent {
 
   public workshops$: Observable<Workshop[]>;
-  
-  constructor(protected workshopService: WorkshopListService) {
+  workshopService: WorkshopListService
+
+  constructor(workshopService: WorkshopListService) {
     this.workshops$ = workshopService.getWorkshop();
+    this.workshopService = workshopService;
   }
 
   //

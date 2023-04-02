@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface Workshop {
   id: number;
-  title: string;
+  title: String;
 }
 
 @Injectable({
@@ -20,7 +20,7 @@ export class WorkshopListService {
   
   getWorkshop(): Observable<Workshop[]>{
     //returns list of workshops
-    return this.http.get<Workshop[]>("/api/profile");
+    return this.http.get<Workshop[]>("/api/workshop");
   }
 
 }
