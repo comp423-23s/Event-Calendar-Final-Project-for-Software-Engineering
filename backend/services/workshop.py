@@ -38,4 +38,3 @@ class WorkshopService:
         query = select(WorkshopEntity)
         workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
         return [ workshop_entity.to_model() for workshop_entity in workshop_entities]
-
