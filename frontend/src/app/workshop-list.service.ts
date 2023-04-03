@@ -22,7 +22,7 @@ export class WorkshopListService {
     
   }
 
-  getWorkshop(): Observable<Workshop[]>{
+  getWorkshops(): Observable<Workshop[]>{
       /* Returns a obersvable list of workshops currently in the database.
 
       Args:

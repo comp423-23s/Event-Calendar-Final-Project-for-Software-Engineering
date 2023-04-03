@@ -15,7 +15,7 @@ export class WorkshopListComponent {
   workshopService: WorkshopListService
 
   constructor(workshopService: WorkshopListService) {
-    this.workshops$ = workshopService.getWorkshop();
+    this.workshops$ = workshopService.getWorkshops();
     this.workshopService = workshopService;
   }
 
@@ -42,6 +42,6 @@ export class WorkshopListComponent {
       None.
 
     */
-    this.workshops$ = this.workshopService.getWorkshop();
+    this.workshops$ = this.workshopService.getWorkshops();
   }
 }
