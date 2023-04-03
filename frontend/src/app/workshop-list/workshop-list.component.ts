@@ -19,8 +19,6 @@ export class WorkshopListComponent {
     this.workshopService = workshopService;
   }
 
-  //
-
   public static Route: Route = {
     path: 'workshop-list',
     component: WorkshopListComponent, 

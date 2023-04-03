@@ -14,7 +14,7 @@ __license__ = "MIT"
 class Workshop(BaseModel):
     id: int | None = None
     title: str
-    description: str | None = None
-    location: str | None = None
+    description: str | None = "No description provided for this event."
+    location: str | None = "Location TBD"
     date: datetime | None = None
     host: User | None = None
