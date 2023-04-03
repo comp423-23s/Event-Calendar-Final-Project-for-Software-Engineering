@@ -11,7 +11,6 @@ __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"
 __license__ = "MIT"
 
-
 if getenv("MODE") != "development":
     print("This script can only be run in development mode.", file=sys.stderr)
     print("Add MODE=development to your .env file in workspace's `backend/` directory")
@@ -61,3 +60,12 @@ with Session(engine) as session:
         session.add(entity)
     session.execute(text(f'ALTER SEQUENCE permission_id_seq RESTART WITH {len(permissions.pairs) + 1}'))
     session.commit()
+
+# Add Workshops
+with Session(engine) as session:
+    from .dev_data import workshops
+    to_entity = entities.WorkshopEntity.from_model
+    session.add_all([to_entity(model) for model in workshops.models])
+    session.execute(text(f'ALTER SEQUENCE {entities.WorkshopEntity.__table__}_id_seq RESTART WITH {len(workshops.models) + 1}'))
+    session.commit()
+
