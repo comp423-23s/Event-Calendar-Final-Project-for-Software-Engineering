@@ -1,8 +1,22 @@
-<h2>Workshops</h2>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <h1>Workshops</h1>
+        </mat-card-title>
+    </mat-card-header>
 
-<mat-list>
-    <mat-list-item *ngFor="let workshop of workshops$ | async">
-        <h3 matListItemTitle>{{workshop.title}}</h3>
-        <p matListItemLine>{{workshop.id}}</p>
-    </mat-list-item>
-</mat-list>
+    <mat-list>
+        <mat-card *ngFor="let workshop of workshops$ | async" style="background-color: #555555;">
+            <mat-card-header>
+                <mat-card-title>{{workshop.title}}</mat-card-title>
+                <mat-card-subtitle>{{workshop.location}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <p></p>
+
+            <mat-card-content>
+                {{workshop.description}}
+            </mat-card-content>
+        </mat-card>
+    </mat-list>
+</mat-card>
