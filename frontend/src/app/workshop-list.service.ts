@@ -7,7 +7,7 @@ export interface Workshop {
   title: String;
   description: String | null;
   location: String | null;
-  // date: Date | null;
+  // date: datetime | null;
   // host: User | null;
 }
 
