@@ -25,11 +25,23 @@ export class WorkshopListComponent {
     path: 'workshop-list',
     component: WorkshopListComponent, 
     title: 'WorkShop List', 
-    canActivate: [isAuthenticated], 
-    //resolve: { profile: profileResolver }
+    canActivate: [isAuthenticated]
   };
 
   getWorkshops(){
+    /*
+    Fetches an observable list of workshops from workshop service and puts in public variable workshops$. Workshop service gets the list from an api call which queires our database for all workshops.
+
+    Args:
+      None.
+    
+    Returns:
+      None.
+
+    Raises:
+      None.
+
+    */
     this.workshops$ = this.workshopService.getWorkshop();
   }
 }
