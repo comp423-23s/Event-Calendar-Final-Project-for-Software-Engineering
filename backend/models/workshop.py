@@ -17,4 +17,5 @@ class Workshop(BaseModel):
     description: str | None = None
     location: str | None = None
     date: datetime | None = None
+    host_id: int | None = None
     host: User | None = None

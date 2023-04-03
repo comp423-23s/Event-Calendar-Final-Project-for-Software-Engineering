@@ -68,3 +68,4 @@ with Session(engine) as session:
     session.add_all([to_entity(model) for model in workshops.models])
     session.execute(text(f'ALTER SEQUENCE {entities.WorkshopEntity.__table__}_id_seq RESTART WITH {len(workshops.models) + 1}'))
     session.commit()
+
