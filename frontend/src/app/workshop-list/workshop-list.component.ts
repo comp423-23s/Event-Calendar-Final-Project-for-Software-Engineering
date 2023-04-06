@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
-import { Workshop, WorkshopListService } from '../workshop-list.service';
+import { User, Workshop, WorkshopListService } from '../workshop-list.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,11 +12,19 @@ import { Observable } from 'rxjs';
 export class WorkshopListComponent {
 
   public workshops$: Observable<Workshop[]>;
-  workshopService: WorkshopListService
+  //public hosts$: Observable<User[]> | null;
+  workshopService: WorkshopListService;
+  //public hosts: User
 
   constructor(workshopService: WorkshopListService) {
-    this.workshops$ = workshopService.getWorkshops();
     this.workshopService = workshopService;
+    this.workshops$ = workshopService.getWorkshops();
+    this.workshops$.subscribe((workshops: Workshop[]) => {
+      workshops.forEach(workshop => {
+        workshop.host = this.getHost(workshop)
+      });
+    });
+    
   }
 
   public static Route: Route = {
@@ -42,4 +50,9 @@ export class WorkshopListComponent {
     */
     this.workshops$ = this.workshopService.getWorkshops();
   }
+
+  getHost(workshop: Workshop): Observable<User>{
+    return this.workshopService.getHost(workshop.host_id);
+  }
+
 }
