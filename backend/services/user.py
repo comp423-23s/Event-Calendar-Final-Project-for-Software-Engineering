@@ -37,6 +37,21 @@ class UserService:
         statement = statement.where(criteria).limit(10)
         entities = self._session.execute(statement).scalars()
         return [entity.to_model() for entity in entities]
+    
+    def search_by_id(self, i: int) -> User | None:
+        try: 
+            query = select(UserEntity).where(UserEntity.id == i)
+            user_entity: UserEntity = self._session.scalar(query)
+            if user_entity is None:
+                return None
+            else:
+                model = user_entity.to_model()
+                #model.permissions = self._permission.get_permissions(model)
+                return model
+        #return [entity.to_model() for entity in entities]
+        except:
+            return None
+
 
     def list(self, subject: User, pagination_params: PaginationParams) -> Paginated[User]:
         self._permission.enforce(subject, 'user.list', 'user/')
