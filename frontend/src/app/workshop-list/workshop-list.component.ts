@@ -52,6 +52,7 @@ export class WorkshopListComponent {
   }
 
   getHost(workshop: Workshop): Observable<User>{
+    //console.log(this.workshopService.getHost(workshop.host_id));
     return this.workshopService.getHost(workshop.host_id);
   }
 

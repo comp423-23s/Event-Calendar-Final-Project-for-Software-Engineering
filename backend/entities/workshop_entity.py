@@ -6,7 +6,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
 from .user_entity import UserEntity
-#from .user_role_entity import user_role_table
 from ..models import Workshop, User
 from datetime import datetime
 
@@ -27,7 +26,7 @@ class WorkshopEntity(EntityBase):
     
     #host: Mapped['UserEntity'] = mapped_column(UserEntity, )
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
-    #host: Mapped['UserEntity'] = relationship(back_populates='workshop')
+    host: Mapped[UserEntity] = relationship('UserEntity', back_populates='workshops')
 
     @classmethod
     def from_model(cls, model: Workshop) -> Self:
@@ -37,7 +36,7 @@ class WorkshopEntity(EntityBase):
             description=model.description,
             location=model.location,
             date=model.date,
-            #host_id = model.host_id
+            host_id = model.host_id
         )
 
     def to_model(self) -> Workshop:
@@ -47,7 +46,18 @@ class WorkshopEntity(EntityBase):
             description=self.description,
             location=self.location,
             date=self.date,
-            #host_id = model.host_id
+            host_id = self.host_id
+        )
+
+    def to_model_w_host(self, _host: User | None) -> Workshop:
+        return Workshop(
+            id=self.id,
+            title=self.title,
+            description=self.description,
+            location=self.location,
+            date=self.date,
+            host_id = self.host_id,
+            #host=_host
         )
     
 

@@ -33,6 +33,9 @@ class UserEntity(EntityBase):
     roles: Mapped[list['RoleEntity']] = relationship(secondary=user_role_table, back_populates='users')
     permissions: Mapped['PermissionEntity'] = relationship(back_populates='user')
 
+    #workshops: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='user')
+    workshops: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='host', cascade='all, delete-orphan')
+
     @classmethod
     def from_model(cls, model: User) -> Self:
         return cls(
@@ -42,7 +45,7 @@ class UserEntity(EntityBase):
             email=model.email,
             first_name=model.first_name,
             last_name=model.last_name,
-            pronouns=model.pronouns,
+            pronouns=model.pronouns
         )
 
     def to_model(self) -> User:
@@ -53,7 +56,7 @@ class UserEntity(EntityBase):
             email=self.email,
             first_name=self.first_name,
             last_name=self.last_name,
-            pronouns=self.pronouns,
+            pronouns=self.pronouns
         )
 
     def update(self, model: User) -> None:
