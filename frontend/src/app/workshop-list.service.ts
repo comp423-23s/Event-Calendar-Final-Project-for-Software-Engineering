@@ -10,7 +10,7 @@ export interface Workshop {
   location: String | null;
    //date: datetime | null;
   host_id: number;
-  host: Observable<User> | null
+  host: User | null
 }
 
 export interface User {
@@ -48,20 +48,5 @@ export class WorkshopListService {
       */
     return this.http.get<Workshop[]>("/api/workshop");
   }
-
-  getHost(id: number): Observable<User>{
-    /* Returns a obersvable list of workshops currently in the database.
-
-    Args:
-      None.
-    
-    Returns:
-      Observable list of workshops.
-
-    Raises:
-      None.
-    */
-  return this.http.get<User>("/api/user/${id}");
-}
 
 }

@@ -57,7 +57,7 @@ class WorkshopEntity(EntityBase):
             location=self.location,
             date=self.date,
             host_id = self.host_id,
-            #host=_host
+            host=_host
         )
     
 

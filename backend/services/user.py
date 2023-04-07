@@ -49,7 +49,8 @@ class UserService:
                 #model.permissions = self._permission.get_permissions(model)
                 return model
         #return [entity.to_model() for entity in entities]
-        except:
+        except Exception as e:
+            print(e)
             return None
 
 

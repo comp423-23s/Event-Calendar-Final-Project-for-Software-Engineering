@@ -19,11 +19,6 @@ export class WorkshopListComponent {
   constructor(workshopService: WorkshopListService) {
     this.workshopService = workshopService;
     this.workshops$ = workshopService.getWorkshops();
-    this.workshops$.subscribe((workshops: Workshop[]) => {
-      workshops.forEach(workshop => {
-        workshop.host = this.getHost(workshop)
-      });
-    });
     
   }
 
@@ -49,11 +44,6 @@ export class WorkshopListComponent {
 
     */
     this.workshops$ = this.workshopService.getWorkshops();
-  }
-
-  getHost(workshop: Workshop): Observable<User>{
-    //console.log(this.workshopService.getHost(workshop.host_id));
-    return this.workshopService.getHost(workshop.host_id);
   }
 
 }
