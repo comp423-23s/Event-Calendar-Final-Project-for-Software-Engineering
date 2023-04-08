@@ -5,17 +5,12 @@ from ...models import User, Role, Permission, Workshop
 from ...entities import UserEntity, RoleEntity, PermissionEntity, WorkshopEntity
 from ...services.workshop import  WorkshopService
 from datetime import datetime
-#from .. import users #not sure if this will work 
 
 #MockModels
 user = User(id=1, pid=999999999, onyen='root', email='root@unc.edu')
 workshop1 = Workshop(id=1, title="Workshop1", description="this is a sample description for workshop1", location="Sitterson Hall", date=datetime(2023, 4, 5, 12, 0), host_id=user.id)
 workshop2 = Workshop(id=2, title="Workshop2", description="this is a sample description for workshop2", location="Dey Hall", date=datetime(2023, 4, 5, 11, 0), host_id=user.id)
-#Bootstrap basic workshop
-
-
-# I need to assert that each object in the workshop list is indeed a workshop model, 
-# and that all the parameters in the object are indeed valid
+workshop3 = Workshop(id=5, title="Workshop3", description="this is a sample description for workshop3", location="Genome Science Building", date=datetime(2023, 4, 5, 11, 0), host_id=user.id)
 
 @pytest.fixture(autouse=True)
 def setup_teardown(test_session: Session):
@@ -44,4 +39,15 @@ def test_workshop_params(workshop: WorkshopService):
     assert workshop1.title == "Workshop1"
     assert workshop1.description == "this is a sample description for workshop1"
     assert workshop1.location == "Sitterson Hall"
+
+def test_add_workshop(workshop: WorkshopService):
+    workshop.add(workshop3)
+    assert len(workshop.list()) == 3
+
+def test_add_correct_workshop(workshop: WorkshopService):
+    workshop.add(workshop3)
+    workshop_test = workshop.list()[2]
+    assert workshop_test.title =="Workshop3"
+    
+    
 
