@@ -46,9 +46,7 @@ class UserService:
                 return None
             else:
                 model = user_entity.to_model()
-                #model.permissions = self._permission.get_permissions(model)
                 return model
-        #return [entity.to_model() for entity in entities]
         except Exception as e:
             print(e)
             return None

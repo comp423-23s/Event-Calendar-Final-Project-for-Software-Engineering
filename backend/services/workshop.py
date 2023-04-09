@@ -8,8 +8,6 @@ from . import UserService
 from ..models import User
 from ..entities import UserEntity
 
-#from .permission import PermissionService
-
 
 
 
@@ -34,5 +32,3 @@ class WorkshopService:
             model = workshop_entity.to_model_w_host(host)
             result.append(model)
         return result
-
-        #return [ workshop_entity.to_model() for workshop_entity in workshop_entities]

@@ -12,9 +12,7 @@ import { Observable } from 'rxjs';
 export class WorkshopListComponent {
 
   public workshops$: Observable<Workshop[]>;
-  //public hosts$: Observable<User[]> | null;
   workshopService: WorkshopListService;
-  //public hosts: User
 
   constructor(workshopService: WorkshopListService) {
     this.workshopService = workshopService;

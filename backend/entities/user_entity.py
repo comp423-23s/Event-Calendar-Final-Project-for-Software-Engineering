@@ -33,7 +33,6 @@ class UserEntity(EntityBase):
     roles: Mapped[list['RoleEntity']] = relationship(secondary=user_role_table, back_populates='users')
     permissions: Mapped['PermissionEntity'] = relationship(back_populates='user')
 
-    #workshops: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='user')
     workshops: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='host', cascade='all, delete-orphan')
 
     @classmethod
