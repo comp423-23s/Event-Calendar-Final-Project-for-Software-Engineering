@@ -2,13 +2,25 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+
 export interface Workshop {
   id: number;
   title: String;
   description: String | null;
   location: String | null;
-  // date: datetime | null;
-  // host: User | null;
+   //date: datetime | null;
+  host_id: number;
+  host: User | null
+}
+
+export interface User {
+  id: number;
+  pid: number;
+  onyen: String;
+  first_name: String;
+  last_name: String;
+  email: String;
+  pronouns: String;
 }
 
 @Injectable({
