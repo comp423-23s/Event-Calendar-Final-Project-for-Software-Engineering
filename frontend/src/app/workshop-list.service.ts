@@ -21,6 +21,7 @@ export interface Workshop {
   date: Date | null;
   host_id: number | null
   host: User | null
+
 }
 
 @Injectable({
