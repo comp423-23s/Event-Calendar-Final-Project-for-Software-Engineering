@@ -1,1 +1,24 @@
 <p>workshop-create works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="title">title</label>
+        <input id="title" type="text" formControlName="title">
+      </div>
+
+    <div>
+      <label for="description">description</label>
+      <input id="description" type="text" formControlName="description">
+    </div>
+    
+    <div>
+      <label for="date">date</label>
+      <input id="date" type="text" formControlName="date">
+    </div>
+
+    <div>
+        <label for="location">location</label>
+        <input id="location" type="text" formControlName="location">
+      </div>
+
+    <button class="button" type="submit">create</button>
+</form>
