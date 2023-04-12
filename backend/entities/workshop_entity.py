@@ -56,7 +56,7 @@ class WorkshopEntity(EntityBase):
             description=self.description,
             location=self.location,
             date=self.date,
-            host_id = model.host_id
+            host_id = self.host_id
         )
     
     def to_model_w_host(self, _host: User | None) -> Workshop:
