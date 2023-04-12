@@ -59,6 +59,10 @@ def test_delete_workshop(workshop: WorkshopService):
     workshop.delete(workshop2.id)
     assert len(workshop.list()) == 1
     assert workshop.list()[0].title == "Workshop1"
+
+def test_delete_nonexistant_workshop(workshop: WorkshopService):
+    workshop.delete(9)
+    assert len(workshop.list()) == 2
     
     
 
