@@ -29,7 +29,7 @@ class WorkshopEntity(EntityBase):
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
     host: Mapped[UserEntity] = relationship('UserEntity', back_populates='workshops_as_host')
 
-    attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
+    #attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee', cascade='all, delete-orphan')
 
     @classmethod
     def from_model(cls, model: Workshop) -> Self:
