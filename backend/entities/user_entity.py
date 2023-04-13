@@ -35,7 +35,7 @@ class UserEntity(EntityBase):
     permissions: Mapped['PermissionEntity'] = relationship(back_populates='user')
 
     workshops_as_host: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='host', cascade='all, delete-orphan')
-    workshops_as_attendee: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', secondary=workshop_attendee_table, back_populates='attendees', cascade='all, delete-orphan')
+    workshops_as_attendee: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', secondary=workshop_attendee_table, back_populates='attendees')
 
     @classmethod
     def from_model(cls, model: User) -> Self:
