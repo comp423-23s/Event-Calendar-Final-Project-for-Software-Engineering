@@ -4,6 +4,9 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
+
+#from . import RoleEntity, PermissionEntity, WorkshopEntity
+
 from .entity_base import EntityBase
 from .user_role_entity import user_role_table
 from .workshop_attendee_entity import workshop_attendee_table

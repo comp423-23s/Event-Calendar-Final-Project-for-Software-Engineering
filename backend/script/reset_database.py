@@ -78,6 +78,7 @@ with Session(engine) as session:
     for user, workshop in workshop_attendees.pairs:
         user_entity = session.get(UserEntity, user.id)
         workshop_entity = session.get(WorkshopEntity, workshop.id)
-        workshop_entity.attendees.append(workshop_entity)
+        workshop_entity.attendees.append(user_entity)
+        user_entity.workshops_as_attendee.append(workshop_entity)
     session.commit()
 

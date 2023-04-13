@@ -5,7 +5,7 @@ from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
-from .user_entity import UserEntity
+#from .user_entity import UserEntity
 from ..models import Workshop, User
 from datetime import datetime
 from .workshop_attendee_entity import workshop_attendee_table
@@ -27,7 +27,7 @@ class WorkshopEntity(EntityBase):
     
     #host: Mapped['UserEntity'] = mapped_column(UserEntity, )
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
-    host: Mapped[UserEntity] = relationship('UserEntity', back_populates='workshops_as_host')
+    host: Mapped['UserEntity'] = relationship('UserEntity', back_populates='workshops_as_host')
 
     attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
 
