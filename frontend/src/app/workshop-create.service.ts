@@ -1,6 +1,6 @@
 import { HostBinding, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError,map } from 'rxjs';
+import { Observable, throwError,map, Subscription } from 'rxjs';
 import { Profile, ProfileService } from '../app/profile/profile.service';
 
 
@@ -31,11 +31,26 @@ export interface Workshop {
 })
 
 export class WorkshopCreateService {
-
-  private profile$: Observable<Profile| undefined>;
-
-  constructor(protected http: HttpClient, private profileservice: ProfileService) { 
-    this.profile$ = profileservice.profile$;
+  private profile$
+  private profileID
+  
+  constructor(protected http: HttpClient) { 
+    this.profile$ = this.http.get<Profile>('/api/profile');
+    let profileID = 0;
+    const profileSub = this.profile$.subscribe({
+      next(Profile){
+        if(Profile.id === null){
+          profileID = 0
+          return null
+        }
+        else{
+          console.log("Profile ID from subscription: "+ Profile.id)
+          profileID = Profile.id
+          return Profile.id
+        }
+      }
+    })
+    this.profileID = profileID
   }
 
 
@@ -65,74 +80,40 @@ export class WorkshopCreateService {
     else{
       let dateAsDate: Date = new Date(date);
 
-      //goes through the observable profile and gets the profiles ID, then if there is no profile it stores null.
-       let hostIDProfile = this.profile$.pipe(
-        map(profile => {
-            if (profile === undefined || null) {
-                return null;
-            } else {
-                console.log("profile id found.")
-                return profile.id
-            }
-        })
-    ); 
+    //goes through the observable profile and gets the profiles ID, then if there is no profile it stores null.
+
+
+    // let hostIDProfile = profile.pipe(
+    //   map(profile=>{
+    //     if (profile === undefined || null){
+    //       return null
+    //     }
+    //     else{
+    //       return profile.subscribe()
+    //     }
+    //   })
+    // )
+
 
     //if hostID cannot be found an error is thrown.
-     if (hostIDProfile == null || undefined){
+    if (this.profileID == null || this.profileID ==undefined){
       return throwError(() => new Error("Error getting profile ID."));
     } 
 
-    //goes through the observable profile and gets the profile as an object, if there is not profile it stores null.
-     let workhostProfile = this.profile$.pipe(
-       map(profile => {
-           if (profile === undefined) {
-               return null;
-           } else {
-               console.log("found profile.")
-               return profile
-           }
-       })
-      ); 
-       //if host cannot be found an error is thrown.
-       if(workhostProfile == null ||undefined){
-         return throwError(() => new Error("Error getting profile."));
-       }
-
-      //creates a workshop object to pass through to the API, id is handled in the backend null is temporary.
-
-
-      /////////////////////////////////////Begin test Variables//////////////////////////////////////////////
-      let hostID = 2;
-
-      //2	100000000	sol	sol@unc.edu	Sol	Student	they / them
-      let workhost = {
-        id: 2,
-        pid: 100000000,
-        onyen: 	"sol", 
-        first_name: "Sol",
-        last_name: "Student",
-        email: "sol@unc.edu",
-        pronouns: "they / them"
-      }
-
-      ////////////////////////////////////////////////////////END TEST VARIABLES/////////////////////////////////////////////////////////
-
-      let returnWorkshop = {
-        id: 10,
-        title: title,
-        description: description,
-        location: location,
-        date: dateAsDate,
-        host_id: hostID,
-        host: workhost
-      }
-      console.log("title: " + title)
-      console.log("host_id: " + hostID)
-
-      
-      console.log("Create service return below...")
-      return this.http.post<Workshop>('/api/workshop', returnWorkshop);
-      
+      //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
+    let returnWorkshop = {
+      id: null,
+      title: title,
+      description: description,
+      location: location,
+      date: dateAsDate,
+      host_id: this.profileID,
+      host: null
+    }
+    console.log("title: " + title)
+    console.log("host_id: " + this.profileID)
+    console.log("Create service return below...")
+    return this.http.post<Workshop>('/api/workshop', returnWorkshop);      
     }
    }
   }
