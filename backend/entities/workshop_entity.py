@@ -32,9 +32,9 @@ class WorkshopEntity(EntityBase):
     attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
 
     @classmethod
-    def from_model_new_user(cls, model: NewWorkshop) -> Self:
-        print("def from_model(cls, model: NewWorkshop) -> Self: --- called\n\n\n")
+    def from_model(cls, model: Workshop) -> Self:
         return cls(
+            id=model.id,
             title=model.title,  
             description=model.description,
             location=model.location,
@@ -42,10 +42,8 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
     
-    def from_model(cls, model: Workshop) -> Self:
-        print("def from_model(cls, model: Workshop) -> Self: --- called\n\n\n")
+    def from_model_new_user(cls, model: NewWorkshop) -> Self:
         return cls(
-            id=model.id,
             title=model.title,  
             description=model.description,
             location=model.location,
