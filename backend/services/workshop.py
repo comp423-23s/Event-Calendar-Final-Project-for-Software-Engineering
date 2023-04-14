@@ -39,7 +39,15 @@ class WorkshopService:
         print("self._session.add(workshop_entity) -- done\n\n\n")
         self._session.commit()
         print("self._session.commit() -- done\n\n\n")
-        #host = self._user_svc.search_by_id(workshop_entity.host_id)
-        #return workshop_entity.to_model_w_host(host)
-        #return workshop_entity.to_model()
         return workshop_entity.to_model()
+
+    
+    def delete(self, id: int) -> Workshop | None:
+        query = select(WorkshopEntity).filter(WorkshopEntity.id == id)
+        workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
+        if workshop_entity != None:
+            self._session.delete(workshop_entity)
+            self._session.commit()
+            return workshop_entity.to_model()
+        else:
+            return

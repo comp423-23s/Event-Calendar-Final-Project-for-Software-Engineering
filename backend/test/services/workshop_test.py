@@ -8,9 +8,10 @@ from datetime import datetime
 
 #MockModels
 user = User(id=1, pid=999999999, onyen='root', email='root@unc.edu')
-workshop1 = Workshop(id=1, title="Workshop1", description="this is a sample description for workshop1", location="Sitterson Hall", date=datetime(2023, 4, 5, 12, 0), host_id=user.id)
-workshop2 = Workshop(id=2, title="Workshop2", description="this is a sample description for workshop2", location="Dey Hall", date=datetime(2023, 4, 5, 11, 0), host_id=user.id)
-workshop3 = Workshop(id=5, title="Workshop3", description="this is a sample description for workshop3", location="Genome Science Building", date=datetime(2023, 4, 5, 11, 0), host_id=user.id)
+
+workshop1 = Workshop(id=1, title="Workshop1", description="this is a sample description for workshop1", location="Sitterson Hall", date=datetime(2023, 4, 5, 12, 0), host_id=1)
+workshop2 = Workshop(id=2, title="Workshop2", description="this is a sample description for workshop2", location="Dey Hall", date=datetime(2023, 4, 5, 11, 0), host_id=1)
+workshop3 = Workshop(id=3, title="Workshop3", description="this is a sample description for workshop3", location="Genome Science Building", date=datetime(2023, 4, 5, 11, 0), host_id=1)
 
 @pytest.fixture(autouse=True)
 def setup_teardown(test_session: Session):
@@ -19,6 +20,8 @@ def setup_teardown(test_session: Session):
     test_session.add(workshop_entity1)
     workshop_entity2 = WorkshopEntity.from_model(workshop2)
     test_session.add(workshop_entity2)
+    user_entity = UserEntity.from_model(user)
+    test_session.add(user_entity)
     test_session.commit()
     
 
@@ -26,6 +29,7 @@ def setup_teardown(test_session: Session):
 def workshop(test_session: Session):
     return WorkshopService(test_session)
 
+#test list workshops
 def test_list_size(workshop: WorkshopService):
     assert len(workshop.list()) == 2
 
@@ -40,6 +44,7 @@ def test_workshop_params(workshop: WorkshopService):
     assert workshop1.description == "this is a sample description for workshop1"
     assert workshop1.location == "Sitterson Hall"
 
+#test add workshop
 def test_add_workshop(workshop: WorkshopService):
     workshop.add(workshop3)
     assert len(workshop.list()) == 3
@@ -48,6 +53,16 @@ def test_add_correct_workshop(workshop: WorkshopService):
     workshop.add(workshop3)
     workshop_test = workshop.list()[2]
     assert workshop_test.title =="Workshop3"
+
+#test delete workshop
+def test_delete_workshop(workshop: WorkshopService):
+    workshop.delete(workshop2.id)
+    assert len(workshop.list()) == 1
+    assert workshop.list()[0].title == "Workshop1"
+
+def test_delete_nonexistant_workshop(workshop: WorkshopService):
+    workshop.delete(9)
+    assert len(workshop.list()) == 2
     
     
 
