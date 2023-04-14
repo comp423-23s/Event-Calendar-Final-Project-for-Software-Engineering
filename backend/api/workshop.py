@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from ..models import Workshop
+from ..models import Workshop, NewWorkshop
 from ..services.workshop import WorkshopService
 from datetime import datetime
 
@@ -12,5 +12,5 @@ def list_workshops(workshop_svc: WorkshopService = Depends()) -> list[Workshop]:
 
 #Adds a workshop to the database. It takes in a workshop model to add, and uses workshop_service as a dependency
 @api.post("", response_model=Workshop, tags=['Workshops'])
-def create_workshop(workshop: Workshop, workshop_svc: WorkshopService = Depends()) -> Workshop:
+def create_workshop(workshop: NewWorkshop, workshop_svc: WorkshopService = Depends()) -> Workshop:
     return workshop_svc.add(workshop)
