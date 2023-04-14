@@ -59,14 +59,21 @@ export class WorkshopCreateService {
    */
   createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
 
-    //Checks if date is null, if not it converts it from a string to a Date object.
-    console.log("Create service start")
+    //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
     if(date === null || date === ""){
       return throwError(() => new Error("No date provided."));
     }
     else{
       let dateAsDate: Date = new Date(date);
- 
+    
+    if(description === null || description === ""){
+      return throwError(() => new Error("No description provided."));
+    }
+
+    if(location === null || location === ""){
+      return throwError(() => new Error("No location provided."));
+    }
+
     //if hostID is null or undefined an error is thrown.
     if (hostid == null || hostid ==undefined){
       return throwError(() => new Error("Profile ID is either null or undefined."));
