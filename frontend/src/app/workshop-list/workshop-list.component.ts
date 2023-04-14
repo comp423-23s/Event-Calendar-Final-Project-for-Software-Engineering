@@ -26,7 +26,7 @@ export class WorkshopListComponent {
     canActivate: [isAuthenticated]
   };
 
-  getWorkshops(){
+  getWorkshops(): Observable<Workshop[]>{
     /*
     Fetches an observable list of workshops from workshop service and puts in public variable workshops$. Workshop service gets the list from an api call which queires our database for all workshops.
 
@@ -41,5 +41,6 @@ export class WorkshopListComponent {
 
     */
     this.workshops$ = this.workshopService.getWorkshops();
+    return this.workshopService.getWorkshops();
   }
 }
