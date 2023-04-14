@@ -2,7 +2,8 @@ import { HostBinding, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError,map, Subscription } from 'rxjs';
 import { Profile, ProfileService } from '../app/profile/profile.service';
-
+import { mergeMap, of, shareReplay } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 
 
 interface User{
@@ -31,26 +32,10 @@ export interface Workshop {
 })
 
 export class WorkshopCreateService {
-  private profile$
-  private profileID
+
   
   constructor(protected http: HttpClient) { 
-    this.profile$ = this.http.get<Profile>('/api/profile');
-    let profileID = 0;
-    const profileSub = this.profile$.subscribe({
-      next(Profile){
-        if(Profile.id === null){
-          profileID = 0
-          return null
-        }
-        else{
-          console.log("Profile ID from subscription: "+ Profile.id)
-          profileID = Profile.id
-          return Profile.id
-        }
-      }
-    })
-    this.profileID = profileID
+
   }
 
 
@@ -61,7 +46,9 @@ export class WorkshopCreateService {
         title: string,
         description: string,
         location: string, 
-        date: string
+        date: string,
+        hostid: number,
+        user: User
       
       Returns:
         The create workshop or an Error.
@@ -71,7 +58,8 @@ export class WorkshopCreateService {
         Error: Error getting profile ID.,
         Error: Error getting profile.
    */
-  createWorkshop(title: string, description: string, location: string, date: string ): Observable<Workshop>{
+  createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
+
     //Checks if date is null, if not it converts it from a string to a Date object.
     console.log("Create service start")
     if(date === null || date === ""){
@@ -80,40 +68,31 @@ export class WorkshopCreateService {
     else{
       let dateAsDate: Date = new Date(date);
 
-    //goes through the observable profile and gets the profiles ID, then if there is no profile it stores null.
-
-
-    // let hostIDProfile = profile.pipe(
-    //   map(profile=>{
-    //     if (profile === undefined || null){
-    //       return null
-    //     }
-    //     else{
-    //       return profile.subscribe()
-    //     }
-    //   })
-    // )
-
-
-    //if hostID cannot be found an error is thrown.
-    if (this.profileID == null || this.profileID ==undefined){
-      return throwError(() => new Error("Error getting profile ID."));
+ 
+    //if hostID is null or undefined an error is thrown.
+    if (hostid == null || hostid ==undefined){
+      return throwError(() => new Error("Profile ID is either null or undefined."));
     } 
 
-      //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
-    let returnWorkshop = {
-      id: null,
+    //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
+    let returnWorkshop: Workshop = {
+      id: 10,
       title: title,
       description: description,
       location: location,
       date: dateAsDate,
-      host_id: this.profileID,
-      host: null
+      host_id: hostid,
+      host: user
     }
     console.log("title: " + title)
-    console.log("host_id: " + this.profileID)
+    console.log("host_id: " + hostid)
     console.log("Create service return below...")
     return this.http.post<Workshop>('/api/workshop', returnWorkshop);      
     }
+   }
+
+   //returns an observable profile
+   getProfileSub(): Observable<Profile>{
+    return this.http.get<Profile>('/api/profile');
    }
   }
