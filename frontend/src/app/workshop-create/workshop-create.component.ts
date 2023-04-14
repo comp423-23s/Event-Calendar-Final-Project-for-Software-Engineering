@@ -54,7 +54,6 @@ export class WorkshopCreateComponent {
     pronouns: "String"
   }
 
-
   constructor(
     private formBuilder: FormBuilder,
     private workshopCreateService: WorkshopCreateService,
@@ -69,8 +68,6 @@ export class WorkshopCreateComponent {
     } )
   }
 
-
-  
   //When form is submitted it gets the information from the form and calls workshop create service and creates a workshop.
   onSubmit(): void{
     let form = this.form.value;
@@ -78,7 +75,6 @@ export class WorkshopCreateComponent {
     let description = form.description ?? "";
     let date = form.date?? "";
     let location = form.location ?? "";
-
 
     this.workshopCreateService
       .createWorkshop(title, description, location, date, this.profileID, this.user)
@@ -88,7 +84,6 @@ export class WorkshopCreateComponent {
       })
   }
 
-
   //Handles success message that occures when trying to create a workshop during the onSumbit function.
   //Nice to have: Make it so  it is not window alerts but intergated into the website HTML.
   private onSuccess(crtedWorkshop: Workshop): void{
@@ -96,9 +91,8 @@ export class WorkshopCreateComponent {
     this.form.reset(); 
   }
 
-
   //Handles errors that occured when trying to create a workshop during the onSumbit function.
-  //Nice to have: Make it so  it is not window alerts but intergated into the website HTML.
+  //Nice to have: Make it so it is not window alerts but intergated into the website HTML.
   private onError(err: Error){
     if(err.message){
       window.alert(err.message);
@@ -107,6 +101,5 @@ export class WorkshopCreateComponent {
       window.alert("Unkown Error: " + JSON.stringify(err));
     }
   }
-  
 }
 

@@ -1,9 +1,8 @@
-import { HostBinding, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError,map, Subscription } from 'rxjs';
-import { Profile, ProfileService } from '../app/profile/profile.service';
-import { mergeMap, of, shareReplay } from 'rxjs';
-import { AuthenticationService } from './authentication.service';
+import { Observable, throwError} from 'rxjs';
+import { Profile } from '../app/profile/profile.service';
+
 
 
 interface User{
@@ -67,12 +66,11 @@ export class WorkshopCreateService {
     }
     else{
       let dateAsDate: Date = new Date(date);
-
  
     //if hostID is null or undefined an error is thrown.
     if (hostid == null || hostid ==undefined){
       return throwError(() => new Error("Profile ID is either null or undefined."));
-    } 
+    }
 
     //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
     let returnWorkshop: Workshop = {
@@ -84,9 +82,6 @@ export class WorkshopCreateService {
       host_id: hostid,
       host: user
     }
-    console.log("title: " + title)
-    console.log("host_id: " + hostid)
-    console.log("Create service return below...")
     return this.http.post<Workshop>('/api/workshop', returnWorkshop);      
     }
    }
