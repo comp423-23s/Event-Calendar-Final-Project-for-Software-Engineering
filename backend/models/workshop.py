@@ -17,5 +17,12 @@ class Workshop(BaseModel):
     description: str = "No description provided for this event."
     location: str = "Location TBD"
     date: datetime | None = None
-    host_id: int | None = None
+    host_id: int = 1
     host: User | None = None
+
+class NewWorkshop(BaseModel):
+    title: str
+    description: str = "No description provided for this event."
+    location: str = "Location TBD"
+    date: datetime | None = None
+    host_id: int = 1

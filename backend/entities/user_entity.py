@@ -4,8 +4,12 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
+
+#from . import RoleEntity, PermissionEntity, WorkshopEntity
+
 from .entity_base import EntityBase
 from .user_role_entity import user_role_table
+from .workshop_attendee_entity import workshop_attendee_table
 from ..models import User
 
 
@@ -33,8 +37,9 @@ class UserEntity(EntityBase):
     roles: Mapped[list['RoleEntity']] = relationship(secondary=user_role_table, back_populates='users')
     permissions: Mapped['PermissionEntity'] = relationship(back_populates='user')
 
-    workshops: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='host', cascade='all, delete-orphan')
-    
+    workshops_as_host: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', back_populates='host', cascade='all, delete-orphan')
+    workshops_as_attendee: Mapped[list['WorkshopEntity']] = relationship('WorkshopEntity', secondary=workshop_attendee_table, back_populates='attendees')
+
     @classmethod
     def from_model(cls, model: User) -> Self:
         return cls(

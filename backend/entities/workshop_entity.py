@@ -5,9 +5,10 @@ from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
-from .user_entity import UserEntity
-from ..models import Workshop, User
+#from .user_entity import UserEntity
+from ..models import Workshop, User, NewWorkshop
 from datetime import datetime
+from .workshop_attendee_entity import workshop_attendee_table
 
 
 __authors__ = ['Kris Jordan']
@@ -26,12 +27,14 @@ class WorkshopEntity(EntityBase):
     
     #host: Mapped['UserEntity'] = mapped_column(UserEntity, )
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
-    host: Mapped[UserEntity] = relationship('UserEntity', back_populates='workshops')
+    host: Mapped['UserEntity'] = relationship('UserEntity', back_populates='workshops_as_host')
+
+    attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
 
     @classmethod
-    def from_model(cls, model: Workshop) -> Self:
+    def from_model_new_user(cls, model: NewWorkshop) -> Self:
+        print("def from_model(cls, model: NewWorkshop) -> Self: --- called\n\n\n")
         return cls(
-            id=model.id,
             title=model.title,  
             description=model.description,
             location=model.location,
@@ -39,7 +42,8 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
     
-    def from_model_w_host(cls, model: Workshop, _host: User | None) -> Self:
+    def from_model(cls, model: Workshop) -> Self:
+        print("def from_model(cls, model: Workshop) -> Self: --- called\n\n\n")
         return cls(
             id=model.id,
             title=model.title,  
@@ -56,7 +60,7 @@ class WorkshopEntity(EntityBase):
             description=self.description,
             location=self.location,
             date=self.date,
-            host_id = model.host_id
+            host_id = self.host_id
         )
     
     def to_model_w_host(self, _host: User | None) -> Workshop:
