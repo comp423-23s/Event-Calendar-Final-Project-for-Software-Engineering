@@ -14,9 +14,7 @@ interface User{
   email: String 
   pronouns: String
 }
-
-
-export interface Workshop {
+export interface WorkshopReturned {
   id: number,
   title: String;
   description: String | null;
@@ -24,6 +22,15 @@ export interface Workshop {
   date: Date | null;
   host_id: number | null
   host: User | null
+}
+
+
+export interface Workshop {
+  title: String;
+  description: String | null;
+  location: String | null;
+  date: Date | null;
+  host_id: number | null
 }
 
 @Injectable({
@@ -57,7 +64,7 @@ export class WorkshopCreateService {
         Error: Error getting profile ID.,
         Error: Error getting profile.
    */
-  createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
+  createWorkshop(title: string, description: string, location: string, date: string, hostid: number): Observable<WorkshopReturned>{
 
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
     if(date === null || date === ""){
@@ -81,15 +88,13 @@ export class WorkshopCreateService {
 
     //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
     let returnWorkshop: Workshop = {
-      id: 10,
       title: title,
       description: description,
       location: location,
       date: dateAsDate,
       host_id: hostid,
-      host: user
     }
-    return this.http.post<Workshop>('/api/workshop', returnWorkshop);      
+    return this.http.post<WorkshopReturned>('/api/workshop', returnWorkshop);      
     }
    }
 
