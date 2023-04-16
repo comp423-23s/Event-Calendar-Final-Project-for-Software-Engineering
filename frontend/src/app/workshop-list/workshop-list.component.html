@@ -18,6 +18,9 @@
             <mat-card-content>
                 {{workshop.description}}
             </mat-card-content>
+            <mat-card-actions>
+                <td><button type="button" (click)='deleteWorkshop(workshop.id)'>Delete</button></td>
+            </mat-card-actions>
         </mat-card>
     </mat-list>
 </mat-card>
