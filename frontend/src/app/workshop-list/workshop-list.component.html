@@ -1,16 +1,16 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <h1>Workshops</h1>
-        </mat-card-title>
-    </mat-card-header>
-
     <mat-list>
-        <mat-card *ngFor="let workshop of workshops$ | async" style="background-color: #555555;">
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Workshops</h1>
+            </mat-card-title>
+        </mat-card-header>    
+
+        <mat-card *ngFor="let workshop of workshops$ | async" style="background-color: #4D4D4D;">
             <mat-card-header>
                 <mat-card-title>{{workshop.title}}</mat-card-title>
                 <mat-card-subtitle>{{workshop.location}}</mat-card-subtitle>
-                <mat-card-subtitle>{{workshop.date| date:'MM/dd/YYYY @ hh:mm a'}}</mat-card-subtitle>
+                <mat-card-subtitle>{{workshop.date| date:'M/dd/YY, h:mm a'}}</mat-card-subtitle>
             </mat-card-header>
 
             <p></p>
@@ -18,8 +18,12 @@
             <mat-card-content>
                 {{workshop.description}}
             </mat-card-content>
+
+            <p></p>
+
             <mat-card-actions>
-                <td><button type="button" (click)='deleteWorkshop(workshop.id)'>Delete</button></td>
+                <button mat-raised-button type="button">Register</button>
+                <button mat-raised-button type="button" (click)="deleteWorkshop(workshop.id)">Delete</button>
             </mat-card-actions>
         </mat-card>
     </mat-list>
