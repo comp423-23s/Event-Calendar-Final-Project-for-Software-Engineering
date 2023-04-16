@@ -33,7 +33,6 @@ class WorkshopEntity(EntityBase):
 
     @classmethod
     def from_model_new_user(cls, model: NewWorkshop) -> Self:
-        print("def from_model(cls, model: NewWorkshop) -> Self: --- called\n\n\n")
         return cls(
             title=model.title,  
             description=model.description,
@@ -42,8 +41,8 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
     
+    @classmethod
     def from_model(cls, model: Workshop) -> Self:
-        print("def from_model(cls, model: Workshop) -> Self: --- called\n\n\n")
         return cls(
             id=model.id,
             title=model.title,  
@@ -53,7 +52,7 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
 
-    def to_model(self) -> Workshop:
+    def to_model(self) -> Workshop:     
         return Workshop(
             id=self.id,
             title=self.title,
