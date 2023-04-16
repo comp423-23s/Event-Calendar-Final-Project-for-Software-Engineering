@@ -11,6 +11,7 @@ export class WorkshopDeleteService {
 
   constructor(protected http: HttpClient) { }
 
+  //Takes in the id of the workshop and calls the workshop delete api. Throws error if there is one.
   deleteWorkshop(id: number): Observable<any>{
     try{
       let tempString = '/api/workshop?id=' + id

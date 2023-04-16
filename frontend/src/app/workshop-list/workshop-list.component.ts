@@ -46,6 +46,19 @@ export class WorkshopListComponent {
   }
   
   deleteWorkshop(id: number){
+     /*
+    Calls the workshop delete service and then the deleteWorkshop function. On success it calls onDelSuccess() on error it calls onDelError(). 
+
+    Args:
+      id: number.
+    
+    Returns:
+      None.
+
+    Raises:
+      Error.
+
+    */
     this.workshopDeleteService.deleteWorkshop(id)
     .subscribe({
       next: (msg)=> this.onDelSuccess(msg),
@@ -53,11 +66,13 @@ export class WorkshopListComponent {
     })
   }
 
+  //Gives a success message and updates workshop list, since one has been deleted.
   onDelSuccess(msg: Workshop){
       window.alert("Workshop has been deleted.")
       this.workshops$ = this.workshopService.getWorkshops();
   }
 
+  //Passes on error message to user.
   onDelError(err: Error){
     if(err.message){
       window.alert(err.message)
