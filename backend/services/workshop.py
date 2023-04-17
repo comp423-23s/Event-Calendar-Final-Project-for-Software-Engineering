@@ -3,7 +3,7 @@ from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop
+from ..models import Workshop, NewWorkshop, User
 from ..entities import WorkshopEntity, UserEntity
 from datetime import datetime
 
@@ -51,3 +51,26 @@ class WorkshopService:
             return workshop_entity.to_model()
         else:
             return
+        
+    # not sure if this works, but I can test!
+
+    #def add_attendee(self, id: int, attendee: User) -> Workshop | None:
+    #    if attendee == None:
+    #        return
+    #    query = select(WorkshopEntity).filter(WorkshopEntity.id == id)
+    #    workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
+    #    if self._user_svc.search_by_id(attendee.id) == None:
+    #        return
+    #    attendee_entity = UserEntity.from_model(attendee)
+    #    if workshop_entity != None:
+    #        self._session.add(workshop_entity, attendee_entity)
+    #        self._session.commit()
+    #        return workshop_entity.to_model()
+    #    return
+
+
+        
+
+            
+
+
