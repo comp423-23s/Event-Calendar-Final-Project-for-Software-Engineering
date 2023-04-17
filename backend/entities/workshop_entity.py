@@ -62,7 +62,7 @@ class WorkshopEntity(EntityBase):
             host_id = self.host_id
         )
     
-    def to_model_w_host(self, _host: User | None) -> Workshop:
+    def to_model_w_users(self, _host: User | None, _attendees: list[User] | None) -> Workshop:
          return Workshop(
              id=self.id,
              title=self.title,
@@ -70,7 +70,8 @@ class WorkshopEntity(EntityBase):
              location=self.location,
              date=self.date,
              host_id = self.host_id,
-             host=_host
+             host=_host,
+             attendees =_attendees
          )
     
 
