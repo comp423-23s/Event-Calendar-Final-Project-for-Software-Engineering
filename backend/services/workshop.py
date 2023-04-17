@@ -3,8 +3,8 @@ from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop
-from ..entities import WorkshopEntity, UserEntity
+from ..models import Workshop, NewWorkshop, User
+from ..entities import WorkshopEntity, UserEntity #, workshop__attendee_table
 from datetime import datetime
 
 class WorkshopService:
@@ -51,3 +51,27 @@ class WorkshopService:
             return workshop_entity.to_model()
         else:
             return
+        
+    # not sure if this works, but I can test!
+    #really good example of how to do this in reset_database
+    def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
+        if attendee == None:
+            return
+        query = select(WorkshopEntity).filter(WorkshopEntity.id == workshop_id)
+        workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
+        attendee = self._user_svc.search_by_id(attendee_id)
+        if attendee == None:
+            return
+        attendee_entity = UserEntity.from_model(attendee)
+        if workshop_entity != None:
+            self._session.add(workshop_entity, attendee_entity)
+            self._session.commit()
+            return workshop_entity.to_model()
+        return
+
+
+        
+
+            
+
+
