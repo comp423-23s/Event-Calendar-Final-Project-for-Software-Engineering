@@ -4,6 +4,7 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { Workshop, WorkshopListService } from '../workshop-list.service';
 import { Observable } from 'rxjs';
 import { WorkshopDeleteService } from '../workshop-delete.service'
+import { PermissionService } from '../permission.service';
 
 @Component({
   selector: 'app-workshop-list',
@@ -14,10 +15,12 @@ export class WorkshopListComponent {
 
   public workshops$: Observable<Workshop[]>;
   workshopService: WorkshopListService
+  public adminPermission$: Observable<boolean>;
 
-  constructor(workshopService: WorkshopListService, private workshopDeleteService: WorkshopDeleteService) {
+  constructor(workshopService: WorkshopListService, private workshopDeleteService: WorkshopDeleteService, private permission: PermissionService) {
     this.workshops$ = workshopService.getWorkshops();
     this.workshopService = workshopService;
+    this.adminPermission$ = this.permission.check('admin.view', 'admin/');
   }
 
   public static Route: Route = {
