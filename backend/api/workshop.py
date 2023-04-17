@@ -20,8 +20,13 @@ def create_workshop(workshop: NewWorkshop, workshop_svc: WorkshopService = Depen
 def delete_workshop(id: int, workshop_svc: WorkshopService = Depends()) -> Workshop | None:
     return workshop_svc.delete(id)
 
+#gets a specific workshop by the id
+@api.get("/{id}", response_model=Workshop | None, tags=['Workshops'])
+def search_by_id(q: int, workshop_svc: WorkshopService = Depends()) -> Workshop | None:
+    return workshop_svc.search_by_id(q)
+
 #Add an attendee to a workshop. Takes in the id of the workshop to register to, and uses workshop_service as a dependency.
-@api.post("", response_model=Workshop | None, tags=['Workshops'])
+@api.post("/register", response_model=Workshop | None, tags=['Workshops'])
 def register_attendee(workshop_id: int, attendee_id: int, workshop_svc: WorkshopService = Depends()) -> Workshop | None:
     return workshop_svc.add_attendee(workshop_id, attendee_id)
 

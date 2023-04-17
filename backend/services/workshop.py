@@ -51,14 +51,29 @@ class WorkshopService:
             return workshop_entity.to_model()
         else:
             return
+
+    def search_by_id(self, i: int) -> Workshop | None:
+        try: 
+            query = select(WorkshopEntity).where(WorkshopEntity.id == i)
+            workshop_entity: WorkshopEntity = self._session.scalar(query)
+            if workshop_entity is None:
+                return None
+            else:
+                model = workshop_entity.to_model()
+                return model
+        except Exception as e:
+            print(e)
+            return None
         
     # not sure if this works, but I can test!
     #really good example of how to do this in reset_database
     def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
-        if attendee == None:
+        if attendee_id == None:
             return
-        query = select(WorkshopEntity).filter(WorkshopEntity.id == workshop_id)
-        workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
+        #query = select(WorkshopEntity).filter(WorkshopEntity.id == workshop_id)
+        #workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
+        query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
+        workshop_entity: WorkshopEntity = self._session.scalar(query)
         attendee = self._user_svc.search_by_id(attendee_id)
         if attendee == None:
             return
