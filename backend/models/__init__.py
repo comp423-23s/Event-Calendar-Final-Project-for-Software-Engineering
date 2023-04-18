@@ -5,7 +5,7 @@ from .permission import Permission
 from .user import User, ProfileForm, NewUser
 from .role import Role
 from .role_details import RoleDetails
-from .workshop import Workshop
+from .workshop import Workshop, NewWorkshop
 
 __authors__ = ["Kris Jordan"]
 __copyright__ = "Copyright 2023"

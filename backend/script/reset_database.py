@@ -69,3 +69,16 @@ with Session(engine) as session:
     session.execute(text(f'ALTER SEQUENCE {entities.WorkshopEntity.__table__}_id_seq RESTART WITH {len(workshops.models) + 1}'))
     session.commit()
 
+print("workshops was committed \n\n\n\n\n")
+
+#Add Users to Workshops
+with Session(engine) as session:
+    from ..entities import UserEntity, WorkshopEntity
+    from .dev_data import workshop_attendees
+    for user, workshop in workshop_attendees.pairs:
+        user_entity = session.get(UserEntity, user.id)
+        workshop_entity = session.get(WorkshopEntity, workshop.id)
+        workshop_entity.attendees.append(user_entity)
+        user_entity.workshops_as_attendee.append(workshop_entity)
+    session.commit()
+

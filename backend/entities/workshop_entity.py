@@ -5,16 +5,20 @@ from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
-from .user_entity import UserEntity
-from ..models import Workshop, User
+#from .user_entity import UserEntity
+from ..models import Workshop, User, NewWorkshop
 from datetime import datetime
+from .workshop_attendee_entity import workshop_attendee_table
 
 
 __authors__ = ['Kris Jordan']
 __copyright__ = 'Copyright 2023'
 __license__ = 'MIT'
 
-
+"""WorkshopEntity models all Workshops in the database. 
+    Arguments: EntityBase
+    Attributes:
+"""
 class WorkshopEntity(EntityBase):
     __tablename__ = 'workshop'
 
@@ -26,8 +30,26 @@ class WorkshopEntity(EntityBase):
     
     #host: Mapped['UserEntity'] = mapped_column(UserEntity, )
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
-    host: Mapped[UserEntity] = relationship('UserEntity', back_populates='workshops')
+    host: Mapped['UserEntity'] = relationship('UserEntity', back_populates='workshops_as_host')
 
+    attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
+
+    #Args: takes in a NewWorkshop model called model
+    #Returns: a WorkshopEntity with identical parameters to the NewWorkshop passed in
+    #Raises: Nothing
+    @classmethod
+    def from_model_new_user(cls, model: NewWorkshop) -> Self:
+        return cls(
+            title=model.title,  
+            description=model.description,
+            location=model.location,
+            date=model.date,
+            host_id = model.host_id
+        )
+    
+    #Args: takes in a Workshop model called model
+    #Returns: a WorkshopEntity with identical parameters to the Workshop passed in
+    #Raises: Nothing
     @classmethod
     def from_model(cls, model: Workshop) -> Self:
         return cls(
@@ -39,7 +61,10 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
 
-    def to_model(self) -> Workshop:
+    #Args: nothing
+    #Returns: a Workshop model with identical parameters to the WorkshopEntity that calls it
+    #Raises: Nothing
+    def to_model(self) -> Workshop:     
         return Workshop(
             id=self.id,
             title=self.title,
@@ -48,16 +73,19 @@ class WorkshopEntity(EntityBase):
             date=self.date,
             host_id = self.host_id
         )
-
+    
+    #Args: an optional User _host which is designated at the host of the returned Workshop model
+    #Returns: a Workshop model with identical parameters to the WorkshopEntity that calls it
+    #Raises: Nothing
     def to_model_w_host(self, _host: User | None) -> Workshop:
-        return Workshop(
-            id=self.id,
-            title=self.title,
-            description=self.description,
-            location=self.location,
-            date=self.date,
-            host_id = self.host_id,
-            host=_host
-        )
+         return Workshop(
+             id=self.id,
+             title=self.title,
+             description=self.description,
+             location=self.location,
+             date=self.date,
+             host_id = self.host_id,
+             host=_host
+         )
     
 

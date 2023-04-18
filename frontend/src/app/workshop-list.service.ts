@@ -3,24 +3,25 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
+interface User{
+  id: number | null;
+  pid: number
+  onyen: String 
+  first_name: String 
+  last_name: String 
+  email: String 
+  pronouns: String
+}
+
 export interface Workshop {
   id: number;
   title: String;
   description: String | null;
   location: String | null;
-   //date: datetime | null;
-  host_id: number;
+  date: Date | null;
+  host_id: number | null
   host: User | null
-}
 
-export interface User {
-  id: number;
-  pid: number;
-  onyen: String;
-  first_name: String;
-  last_name: String;
-  email: String;
-  pronouns: String;
 }
 
 @Injectable({

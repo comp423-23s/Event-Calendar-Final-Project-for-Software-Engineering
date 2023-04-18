@@ -10,7 +10,7 @@ __license__ = "MIT"
 
 class User(BaseModel):
     id: int | None = None
-    pid: int
+    pid: int = 0
     onyen: str = ""
     first_name: str = ""
     last_name: str = ""
