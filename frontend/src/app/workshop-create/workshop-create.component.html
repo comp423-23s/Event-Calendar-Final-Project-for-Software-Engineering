@@ -1,10 +1,7 @@
-<!-- <form [formGroup]="workshopCreateForm" (ngSubmit)="onSubmit()"> -->
-<form>
-<!---->
+ <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
     <mat-card>
-        <!-- <mat-card-header *ngIf="workshop.id; else registration"> -->
         <mat-card-header>
-        <!---->
             <mat-card-title>Create a Workshop</mat-card-title>
             <mat-card-subtitle>
                 Submit the details of your workshop here.
@@ -39,9 +36,7 @@
         </mat-card-content>
 
         <mat-card-actions>
-            <!-- <button mat-raised-button type="submit" [disabled]="profileForm.invalid">SAVE</button> -->
-            <button mat-raised-button type="submit">SAVE</button>
-            <!---->
+            <button mat-raised-button type="submit" [disabled]="form.invalid">SAVE</button>
         </mat-card-actions>
     </mat-card>
 </form>
