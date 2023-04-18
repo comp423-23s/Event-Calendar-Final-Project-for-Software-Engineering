@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
-import { Workshop, WorkshopListService } from '../workshop-list.service';
+import { User, Workshop, WorkshopListService } from '../workshop-list.service';
 import { Observable } from 'rxjs';
 import { WorkshopDeleteService } from '../workshop-delete.service'
 import { PermissionService } from '../permission.service';

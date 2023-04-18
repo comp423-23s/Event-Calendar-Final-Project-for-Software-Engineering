@@ -49,7 +49,7 @@ class UserEntity(EntityBase):
             email=model.email,
             first_name=model.first_name,
             last_name=model.last_name,
-            pronouns=model.pronouns,
+            pronouns=model.pronouns
         )
 
     def to_model(self) -> User:
@@ -60,7 +60,7 @@ class UserEntity(EntityBase):
             email=self.email,
             first_name=self.first_name,
             last_name=self.last_name,
-            pronouns=self.pronouns,
+            pronouns=self.pronouns
         )
 
     def update(self, model: User) -> None:
