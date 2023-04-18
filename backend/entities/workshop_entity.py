@@ -15,7 +15,10 @@ __authors__ = ['Kris Jordan']
 __copyright__ = 'Copyright 2023'
 __license__ = 'MIT'
 
-
+"""WorkshopEntity models all Workshops in the database. 
+    Arguments: EntityBase
+    Attributes:
+"""
 class WorkshopEntity(EntityBase):
     __tablename__ = 'workshop'
 
@@ -31,6 +34,9 @@ class WorkshopEntity(EntityBase):
 
     attendees: Mapped[list['UserEntity']] = relationship('UserEntity', secondary=workshop_attendee_table, back_populates='workshops_as_attendee')
 
+    #Args: takes in a NewWorkshop model called model
+    #Returns: a WorkshopEntity with identical parameters to the NewWorkshop passed in
+    #Raises: Nothing
     @classmethod
     def from_model_new_user(cls, model: NewWorkshop) -> Self:
         return cls(
@@ -41,6 +47,9 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
     
+    #Args: takes in a Workshop model called model
+    #Returns: a WorkshopEntity with identical parameters to the Workshop passed in
+    #Raises: Nothing
     @classmethod
     def from_model(cls, model: Workshop) -> Self:
         return cls(
@@ -52,6 +61,9 @@ class WorkshopEntity(EntityBase):
             host_id = model.host_id
         )
 
+    #Args: nothing
+    #Returns: a Workshop model with identical parameters to the WorkshopEntity that calls it
+    #Raises: Nothing
     def to_model(self) -> Workshop:     
         return Workshop(
             id=self.id,
@@ -62,6 +74,9 @@ class WorkshopEntity(EntityBase):
             host_id = self.host_id
         )
     
+    #Args: an optional User _host which is designated at the host of the returned Workshop model
+    #Returns: a Workshop model with identical parameters to the WorkshopEntity that calls it
+    #Raises: Nothing
     def to_model_w_host(self, _host: User | None) -> Workshop:
          return Workshop(
              id=self.id,
