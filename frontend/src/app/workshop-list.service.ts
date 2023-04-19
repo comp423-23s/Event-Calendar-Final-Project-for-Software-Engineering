@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-interface User{
+export interface User{
   id: number | null;
   pid: number
   onyen: String 
