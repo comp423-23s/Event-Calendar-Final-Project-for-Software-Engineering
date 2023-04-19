@@ -58,14 +58,19 @@ export class WorkshopCreateService {
         Error: Error getting profile.
    */
   createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
-
+    console.log("I got here!")
+    console.log("The date is:")
+    console.log(date)
+    console.log("The title is")
+    console.log(title)
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
     if(date === null || date === ""){
       return throwError(() => new Error("No date provided."));
     }
     else{
       let dateAsDate: Date = new Date(date);
-    
+    console.log("description is:")
+    console.log(description)
     if(description === null || description === ""){
       return throwError(() => new Error("No description provided."));
     }
