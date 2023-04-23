@@ -19,6 +19,7 @@ class Workshop(BaseModel):
     date: datetime | None = None
     host_id: int = 1
     host: User | None = None
+    attendees: list[User] = []
 
 class NewWorkshop(BaseModel):
     title: str

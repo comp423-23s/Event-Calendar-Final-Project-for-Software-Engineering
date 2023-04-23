@@ -21,6 +21,7 @@ class WorkshopService:
         self._session = session
         self._user_svc = UserService(session)
 
+
     #Args: None
     #Returns: the list of all Workshop models currently stored
     #Raises: Nothing
@@ -29,23 +30,24 @@ class WorkshopService:
         workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
         result = []
         for workshop_entity in workshop_entities:
+            attendees = []
+            for a in workshop_entity.attendees:
+                attendees.append(a.to_model())
             host = self._user_svc.search_by_id(workshop_entity.host_id)
-            model = workshop_entity.to_model_w_host(host)
+            model = workshop_entity.to_model_w_users(host, attendees)
             result.append(model)
         return result
+        
         
     #Args: a NewWorkshop model workshop representing the workshop to be created
     #Returns: A copy of the created Workshop model, or None if no workshop was created
     #Raises: Nothing
     def add(self, workshop: NewWorkshop) -> Workshop | None:
-        print("workshop:", workshop, "\n\n\n")
         workshop_entity = WorkshopEntity.from_model_new_user(workshop)
-        print("workshop_entity = WorkshopEntity.from_model(workshop) -- done \n\n\n")
         self._session.add(workshop_entity)
-        print("self._session.add(workshop_entity) -- done\n\n\n")
         self._session.commit()
-        print("self._session.commit() -- done\n\n\n")
         return workshop_entity.to_model()
+
 
     #Args: int id representing the id of the workshop to be deleted
     #Returns: a copy of the deleted Workshop model, or None if no workshop was deleted
@@ -59,3 +61,33 @@ class WorkshopService:
             return workshop_entity.to_model()
         else:
             return
+
+    def search_by_id(self, i: int) -> Workshop | None:
+        try: 
+            query = select(WorkshopEntity).where(WorkshopEntity.id == i)
+            workshop_entity: WorkshopEntity = self._session.scalar(query)
+            if workshop_entity is None:
+                return None
+            else:
+                model = workshop_entity.to_model()
+                return model
+        except Exception as e:
+            print(e)
+            return None
+        
+
+    def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
+        if attendee_id == None:
+            return
+        query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
+        workshop_entity: WorkshopEntity = self._session.scalar(query)
+        attendee = self._user_svc.search_by_id(attendee_id)
+        if attendee == None:
+            return
+        attendee_entity = UserEntity.from_model(attendee)
+        if workshop_entity != None:
+            self._session.add(workshop_entity, attendee_entity)
+            self._session.commit()
+            return workshop_entity.to_model()
+        return
+
