@@ -19,8 +19,9 @@ export interface Workshop {
   description: String | null;
   location: String | null;
   date: Date | null;
-  host_id: number | null
-  host: User | null
+  host_id: number | null;
+  host: User | null;
+  attendees: User[] | null;
 
 }
 
