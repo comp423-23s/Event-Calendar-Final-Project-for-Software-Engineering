@@ -23,15 +23,10 @@ class WorkshopService:
         workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
         result = []
         for workshop_entity in workshop_entities:
-            #print("\n\n\n workshop attendess", workshop_entity.attendees, "\n\n\n")
-            
             attendees = []
-          
             for a in workshop_entity.attendees:
                 attendees.append(a.to_model())
-                print("\n\n\n workshop attendess", a.to_model(), "\n\n\n")
             host = self._user_svc.search_by_id(workshop_entity.host_id)
-            print("\n\n\n workshop host", host, "\n\n\n")
             model = workshop_entity.to_model_w_users(host, attendees)
             result.append(model)
         return result

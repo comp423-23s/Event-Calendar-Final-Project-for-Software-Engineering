@@ -1,11 +1,8 @@
 '''User accounts for all registered users in the application.'''
-
-
 from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
-#from .user_entity import UserEntity
 from ..models import Workshop, User, NewWorkshop
 from datetime import datetime
 from .workshop_attendee_entity import workshop_attendee_table
@@ -25,7 +22,6 @@ class WorkshopEntity(EntityBase):
     location: Mapped[str] = mapped_column(String(64), nullable=False, default='')
     date: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=datetime.now)
     
-    #host: Mapped['UserEntity'] = mapped_column(UserEntity, )
     host_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
     host: Mapped['UserEntity'] = relationship('UserEntity', back_populates='workshops_as_host')
 

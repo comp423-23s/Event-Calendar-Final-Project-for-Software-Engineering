@@ -30,9 +30,5 @@ def search_by_id(q: int, workshop_svc: WorkshopService = Depends()) -> Workshop 
 def register_attendee(workshop_id: int, attendee_id: int, workshop_svc: WorkshopService = Depends()) -> Workshop | None:
     return workshop_svc.add_attendee(workshop_id, attendee_id)
 
-#@api.get("/attendees/{workshop_id}", response_model=Workshop | None, tags=['Workshops'])
-#def get_attendees(q: int, workshop_svc: WorkshopService = Depends()) -> User | None:
-    #return workshop_svc.list_attendees(q)
-
 
 
