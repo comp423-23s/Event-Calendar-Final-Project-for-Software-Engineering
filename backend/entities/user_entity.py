@@ -4,6 +4,9 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
+
+#from . import RoleEntity, PermissionEntity, WorkshopEntity
+
 from .entity_base import EntityBase
 from .user_role_entity import user_role_table
 from .workshop_attendee_entity import workshop_attendee_table
@@ -46,7 +49,7 @@ class UserEntity(EntityBase):
             email=model.email,
             first_name=model.first_name,
             last_name=model.last_name,
-            pronouns=model.pronouns,
+            pronouns=model.pronouns
         )
 
     def to_model(self) -> User:
@@ -57,7 +60,7 @@ class UserEntity(EntityBase):
             email=self.email,
             first_name=self.first_name,
             last_name=self.last_name,
-            pronouns=self.pronouns,
+            pronouns=self.pronouns
         )
 
     def update(self, model: User) -> None:

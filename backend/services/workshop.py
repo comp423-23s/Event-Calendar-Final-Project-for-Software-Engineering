@@ -3,11 +3,16 @@ from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop, User
-from ..entities import WorkshopEntity, UserEntity #, workshop__attendee_table
+from ..models import Workshop, NewWorkshop
+from ..entities import WorkshopEntity, UserEntity
 from datetime import datetime
 
 class WorkshopService:
+    #the service containing all of the functions for managing workshop models in the database. 
+    #these functions are called by the file backend\api\workshop.py
+    # Attributes: _session: a sqlalchemy session for connecting the functions with the database
+    #             _user_svc: a copy of UserService to assist with getting user info for the functions
+
 
     _session: Session
     _user_svc: UserService
@@ -15,9 +20,11 @@ class WorkshopService:
     def __init__(self, session: Session = Depends(db_session)):
         self._session = session
         self._user_svc = UserService(session)
-        #UserService(session)
 
 
+    #Args: None
+    #Returns: the list of all Workshop models currently stored
+    #Raises: Nothing
     def list(self) -> list[Workshop]:
         query = select(WorkshopEntity)
         workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
@@ -31,20 +38,20 @@ class WorkshopService:
             result.append(model)
         return result
         
-
-    def add(self, workshop: NewWorkshop) -> Workshop | None:
         
-        print("workshop:", workshop, "\n\n\n")
-        #print("\n\n\n\n\n")
+    #Args: a NewWorkshop model workshop representing the workshop to be created
+    #Returns: A copy of the created Workshop model, or None if no workshop was created
+    #Raises: Nothing
+    def add(self, workshop: NewWorkshop) -> Workshop | None:
         workshop_entity = WorkshopEntity.from_model_new_user(workshop)
-        print("workshop_entity = WorkshopEntity.from_model(workshop) -- done \n\n\n")
         self._session.add(workshop_entity)
-        print("self._session.add(workshop_entity) -- done\n\n\n")
         self._session.commit()
-        print("self._session.commit() -- done\n\n\n")
         return workshop_entity.to_model()
 
-    
+
+    #Args: int id representing the id of the workshop to be deleted
+    #Returns: a copy of the deleted Workshop model, or None if no workshop was deleted
+    #Raises: Nothing
     def delete(self, id: int) -> Workshop | None:
         query = select(WorkshopEntity).filter(WorkshopEntity.id == id)
         workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
@@ -68,13 +75,10 @@ class WorkshopService:
             print(e)
             return None
         
-    # not sure if this works, but I can test!
-    #really good example of how to do this in reset_database
+
     def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
         if attendee_id == None:
             return
-        #query = select(WorkshopEntity).filter(WorkshopEntity.id == workshop_id)
-        #workshop_entity: WorkshopEntity = self._session.execute(query).scalar()
         query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
         workshop_entity: WorkshopEntity = self._session.scalar(query)
         attendee = self._user_svc.search_by_id(attendee_id)
@@ -86,3 +90,4 @@ class WorkshopService:
             self._session.commit()
             return workshop_entity.to_model()
         return
+
