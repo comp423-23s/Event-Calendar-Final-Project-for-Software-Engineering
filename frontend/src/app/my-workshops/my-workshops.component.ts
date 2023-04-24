@@ -53,10 +53,36 @@ export class MyWorkshopsComponent {
   }
 
   getHosting() {
+   /*
+   Calls getHosting() from the MyWorkshopsService. 
+
+   Args:
+     None.
+   
+   Returns:
+     None.
+
+   Raises:
+     None.
+
+   */
     this.myWorkshopsService.getHosting();
   }
 
   getAttending() {
+   /*
+   Calls getAttending() from the MyWorkshopsService. 
+
+   Args:
+     None.
+   
+   Returns:
+     None.
+
+   Raises:
+     Error.
+
+   */
     if(this.user$) {
       this.myWorkshopsService.getAttending(this.user$);
     }
