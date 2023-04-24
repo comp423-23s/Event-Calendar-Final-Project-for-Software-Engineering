@@ -93,5 +93,6 @@ class WorkshopEntity(EntityBase):
              host_id = self.host_id,
              host=_host,
              attendees =_attendees
+        )
     
 

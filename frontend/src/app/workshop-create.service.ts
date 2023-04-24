@@ -23,6 +23,7 @@ export interface Workshop {
   date: Date | null;
   host_id: number | null
   host: User | null
+  attendees: User[] | null;
 }
 
 @Injectable({
@@ -86,7 +87,8 @@ export class WorkshopCreateService {
       location: location,
       date: dateAsDate,
       host_id: hostid,
-      host: user
+      host: user,
+      attendees: []
     }
     return this.http.post<Workshop>('/api/workshop', returnWorkshop);      
     }
