@@ -100,6 +100,19 @@ export class WorkshopListComponent {
   }
 
   registerUser(workshopId: number){
+    /*
+    Calls the registerService to register the user. On success it calls onRegSuccess() on error it calls onRegError(). 
+
+    Args:
+      workshopId: number.
+    
+    Returns:
+      None.
+
+    Raises:
+      Error.
+
+    */
     if(this.user$?.id) {
       this.registerService.registerUser(workshopId, this.user$.id).subscribe({
         next: (msg)=> this.onRegSuccess(),
@@ -111,10 +124,12 @@ export class WorkshopListComponent {
     }
   }
 
+  // Gives success message once user is registered.
   onRegSuccess() {
-    window.alert("")
+    window.alert("Successfully registered!")
   }
 
+  // Gives an error message if registration fails
   onRegError(err: Error) {
     if(err.message){
       window.alert(err.message)
