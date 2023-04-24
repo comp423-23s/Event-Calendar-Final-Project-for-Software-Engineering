@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { isAuthenticated } from 'src/app/gate/gate.guard';
 import { ActivatedRoute, Route } from '@angular/router';
 import { User, Workshop, WorkshopListService } from '../workshop-list.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { WorkshopDeleteService } from '../workshop-delete.service'
 import { PermissionService } from '../permission.service';
+import { WorkshopRegisterService } from '../workshop-register.service';
+import { Profile } from '../profile/profile.service';
 
 @Component({
   selector: 'app-workshop-list',
@@ -16,11 +18,23 @@ export class WorkshopListComponent {
   public workshops$: Observable<Workshop[]>;
   workshopService: WorkshopListService
   public adminPermission$: Observable<boolean>;
+  private user$: User | null = null;
 
-  constructor(workshopService: WorkshopListService, private workshopDeleteService: WorkshopDeleteService, private permission: PermissionService) {
+  constructor(workshopService: WorkshopListService, 
+    private workshopDeleteService: WorkshopDeleteService, 
+    private permission: PermissionService, 
+    private registerService: WorkshopRegisterService) {
     this.workshops$ = workshopService.getWorkshops();
     this.workshopService = workshopService;
     this.adminPermission$ = this.permission.check('admin.view', 'admin/');
+    registerService.getUser().subscribe(profile => {
+      if(profile) {
+        this.user$ = profile;
+      }
+      else {
+        this.user$ = null;
+      }
+    });
   }
 
   public static Route: Route = {
@@ -85,8 +99,44 @@ export class WorkshopListComponent {
     }
   }
 
-  registerToWorkshop(id: number){
+  registerUser(workshopId: number){
+    /*
+    Calls the registerService to register the user. On success it calls onRegSuccess() on error it calls onRegError(). 
+
+    Args:
+      workshopId: number.
     
+    Returns:
+      None.
+
+    Raises:
+      Error.
+
+    */
+    if(this.user$?.id) {
+      this.registerService.registerUser(workshopId, this.user$.id).subscribe({
+        next: (msg)=> this.onRegSuccess(),
+        error: (err) => this.onRegError(err)  
+      })
+    }
+    else {
+      throwError(() => new Error("User is null."));
+    }
+  }
+
+  // Gives success message once user is registered.
+  onRegSuccess() {
+    window.alert("Successfully registered!")
+  }
+
+  // Gives an error message if registration fails
+  onRegError(err: Error) {
+    if(err.message){
+      window.alert(err.message)
+    }
+    else{
+      window.alert("Unknown error: " + JSON.stringify(err))
+    } 
   }
 
 }
