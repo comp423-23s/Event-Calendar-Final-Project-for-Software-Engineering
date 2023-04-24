@@ -85,4 +85,8 @@ export class WorkshopListComponent {
     }
   }
 
+  registerToWorkshop(id: number){
+    
+  }
+
 }
