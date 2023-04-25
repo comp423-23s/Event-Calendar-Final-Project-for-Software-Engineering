@@ -41,7 +41,7 @@ class RegistrationService:
             return
         query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
         workshop_entity: WorkshopEntity = self._session.scalar(query)
-        attendee = self._user_svc.search_by_id(attendee_id)
+        attendee = self._user.search_by_id(attendee_id)
         if attendee == None:
             return
         attendee_entity = UserEntity.from_model(attendee)
@@ -52,15 +52,15 @@ class RegistrationService:
         return
 
     #testing this
-    def get_as_host(self, subject: User) -> list[Workshop] | None:
+    def hosting(self, subject_id: int) -> str:
         try: 
-            query = select(WorkshopEntity).where(WorkshopEntity.host_id == subject.id)
+            query = select(WorkshopEntity).where(WorkshopEntity.host_id == subject_id)
             workshop_entities = self._session.execute(query).scalars().all()
             if workshop_entities is None:
-                return None
+                return "hosting nothing loser"
             else:
                 workshop_models = [entity.to_model() for entity in workshop_entities]
-                return workshop_models
+                return 'workshop_models'
         except Exception as e:
             print(e)
-            return None
+            return "error"

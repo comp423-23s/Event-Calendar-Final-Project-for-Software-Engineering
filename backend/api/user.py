@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from ..services import UserService
-from ..models import User
+from ..services import UserService, RegistrationService
+from ..models import User, Workshop
 from .authentication import registered_user
 
 api = APIRouter(prefix="/api/user")
@@ -14,4 +14,9 @@ def search(q: str, subject: User = Depends(registered_user), user_svc: UserServi
 @api.get("/{id}", response_model=User | None, tags=['User'])
 def search_by_id(q: int, user_svc: UserService = Depends()) -> User | None:
     return user_svc.search_by_id(q)
+
+#this api returns all of the workshops that a user hosts
+@api.get("/hosting", response_model=str, tags=['User'])
+def hosting(q: int, registration_svc: RegistrationService = Depends()):
+    return registration_svc.hosting(q)
 
