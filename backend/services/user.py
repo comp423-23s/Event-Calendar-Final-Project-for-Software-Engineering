@@ -2,10 +2,11 @@ from fastapi import Depends
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
 from ..database import db_session
-from ..models import User, Paginated, PaginationParams
+from ..models import User, Paginated, PaginationParams, Workshop
 from ..entities import UserEntity
 from .permission import PermissionService
 
+from typing import List
 
 class UserService:
 
@@ -89,3 +90,34 @@ class UserService:
             self._session.add(entity)
         self._session.commit()
         return entity.to_model()
+    
+
+    def get_hosting(self, subject_id: int) -> List[Workshop] | None:
+        try: 
+            query = select(UserEntity).where(UserEntity.id == subject_id)
+            user_entity: UserEntity = self._session.scalar(query)
+            if user_entity is None:
+                return None
+            else:
+                hosting: List[Workshop] = []
+                for h in user_entity.workshops_as_host:
+                    hosting.append(h.to_model())
+                return hosting
+        except Exception as e:
+            print(e)
+            return None
+        
+    def get_attending(self, subject_id: int) -> List[Workshop] | None:
+        try: 
+            query = select(UserEntity).where(UserEntity.id == subject_id)
+            user_entity: UserEntity = self._session.scalar(query)
+            if user_entity is None:
+                return None
+            else:
+                attending: List[Workshop] = []
+                for a in user_entity.workshops_as_attendee:
+                    attending.append(a.to_model())
+                return attending
+        except Exception as e:
+            print(e)
+            return None

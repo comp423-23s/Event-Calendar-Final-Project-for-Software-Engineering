@@ -56,39 +56,6 @@ class RegistrationService:
         except Exception as e:
             print("\n\n\nThere was an Exception:", e, "\n\n\n")
             return
-
-
-    def get_hosting(self, subject_id: int) -> List[Workshop] | None:
-        try: 
-            query = select(UserEntity).where(UserEntity.id == subject_id)
-            user_entity: UserEntity = self._session.scalar(query)
-            if user_entity is None:
-                return None
-            else:
-                hosting: List[Workshop] = []
-                for h in user_entity.workshops_as_host:
-                    hosting.append(h.to_model())
-                #model = workshop_entity.to_model()
-                return hosting
-        except Exception as e:
-            print(e)
-            return None
-        
-    def get_attending(self, subject_id: int) -> List[Workshop] | None:
-        try: 
-            query = select(UserEntity).where(UserEntity.id == subject_id)
-            user_entity: UserEntity = self._session.scalar(query)
-            if user_entity is None:
-                return None
-            else:
-                attending: List[Workshop] = []
-                for a in user_entity.workshops_as_attendee:
-                    attending.append(a.to_model())
-                #model = workshop_entity.to_model()
-                return attending
-        except Exception as e:
-            print(e)
-            return None
         
         
         #try: 

@@ -19,13 +19,13 @@ def search_by_id(q: int, user_svc: UserService = Depends()) -> User | None:
 
 #this api returns all of the workshops that a user hosts
 @api.get("/hosting/{id}", response_model=list[Workshop], tags=['User'])
-def hosting_workshops(i: int, registration_svc: RegistrationService = Depends()) -> list[Workshop]:
-    return registration_svc.get_hosting(i)
+def hosting_workshops(i: int, user_svc: UserService = Depends()) -> list[Workshop]:
+    return user_svc.get_hosting(i)
 
 #this api returns all of the workshops that a user attends
 @api.get("/attending/{id}", response_model=list[Workshop], tags=['User'])
-def attending_workshops(i: int, registration_svc: RegistrationService = Depends()) -> list[Workshop]:
-    return registration_svc.get_attending(i)
+def attending_workshops(i: int, user_svc: UserService = Depends()) -> list[Workshop]:
+    return user_svc.get_attending(i)
 
 
 
