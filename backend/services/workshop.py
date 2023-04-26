@@ -41,7 +41,6 @@ class WorkshopService:
             self._session.commit()
             return workshop_entity.to_model()
         else:
-            print("\n\n\nThere is no workshop to delete\n\n\n")
             return
 
     def search_by_id(self, i: int) -> Workshop | None:

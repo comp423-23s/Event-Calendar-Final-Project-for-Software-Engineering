@@ -1,7 +1,6 @@
 """Workshop is the data object"""
 
 from pydantic import BaseModel
-#from . import User
 from .user import User
 from datetime import datetime
 
