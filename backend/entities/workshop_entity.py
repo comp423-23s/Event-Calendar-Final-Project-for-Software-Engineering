@@ -81,5 +81,15 @@ class WorkshopEntity(EntityBase):
             host=_host,
             attendees =_attendees
         )
+
+    #Args: a Workshop model called model containing the new Workshop settings you wish to update
+    #Returns: Nothing
+    #Raises: Nothing
+    def update(self, model: Workshop) -> None:
+        self.title = model.title
+        self.description = model.description
+        self.location  = model.location
+        self.date = model.date
+
     
 

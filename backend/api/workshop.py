@@ -32,4 +32,12 @@ def search_by_id(q: int, workshop_svc: WorkshopService = Depends()) -> Workshop 
 def register_attendee(workshop_id: int, attendee_id: int, registration_svc: RegistrationService = Depends()) -> Workshop | None:
     return registration_svc.add_attendee(workshop_id, attendee_id)
 
+#Updates the workshop with the given workshop id using the parameters of the new workshop passed in. 
+#Takes in id of the workshop to update, a workshop model with the new arguments to be updated, and uses workshop_service as a dependency. 
+#Note: neither the host nor the workshop_id are updated by this function
+@api.put("", response_model=Workshop | None, tags=['Workshops'])
+def update_workshop(workshop_id: int, new_workshop: Workshop, workshop_svc: WorkshopService = Depends()) -> Workshop | None:
+    return workshop_svc.update_workshop(workshop_id, new_workshop)
+
+
 
