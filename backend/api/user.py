@@ -3,6 +3,8 @@ from ..services import UserService, RegistrationService
 from ..models import User, Workshop
 from .authentication import registered_user
 
+from datetime import datetime
+
 api = APIRouter(prefix="/api/user")
 
 ##this api returns a user based on their first name, last name, onyen, or email
@@ -16,7 +18,16 @@ def search_by_id(q: int, user_svc: UserService = Depends()) -> User | None:
     return user_svc.search_by_id(q)
 
 #this api returns all of the workshops that a user hosts
-@api.get("/hosting", response_model=str, tags=['User'])
-def hosting(q: int, registration_svc: RegistrationService = Depends()):
-    return registration_svc.hosting(q)
+@api.get("/hosting/{id}", response_model=list[Workshop], tags=['User'])
+def hosting_workshops(i: int, registration_svc: RegistrationService = Depends()) -> list[Workshop]:
+    return registration_svc.get_hosting(i)
+
+#this api returns all of the workshops that a user attends
+@api.get("/attending/{id}", response_model=list[Workshop], tags=['User'])
+def attending_workshops(i: int, registration_svc: RegistrationService = Depends()) -> list[Workshop]:
+    return registration_svc.get_attending(i)
+
+
+
+
 
