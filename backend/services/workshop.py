@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
 from ..models import Workshop, NewWorkshop
-from ..entities import WorkshopEntity, UserEntity
-from datetime import datetime
+from ..entities import WorkshopEntity
+
 
 class WorkshopService:
     #the service containing all of the functions for managing workshop models in the database. 

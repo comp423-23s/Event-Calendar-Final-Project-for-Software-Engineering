@@ -9,6 +9,7 @@ from ..entities import UserEntity, WorkshopEntity
 
 from typing import List
 
+#the file as user serive and workshop service imported. This avoids a circular input error
 class RegistrationService:
 
     _session: Session
@@ -36,19 +37,16 @@ class RegistrationService:
             result.append(model)
         return result
     
-    #this is the function we need to be working on
+    #Args: Workshop id, User id
+    #Returns: adds the user as an attendee for a workshop, returns the updated workshop
+    #Raises: Nothing
     def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
-        #if attendee_id == None:
-        #    return
         query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
         workshop_entity: WorkshopEntity = self._session.scalar(query)
-        #workshop: Workshop = self._workshop.search_by_id(workshop_id)
         attendee: User = self._user.search_by_id(attendee_id)
         if attendee is None:
             return
         attendee_entity: UserEntity = UserEntity.from_model(attendee)
-        #workshop_entity: WorkshopEntity = WorkshopEntity.from_model(workshop)
-        #if workshop_entity != None:
         try:
             self._session.add(workshop_entity, attendee_entity)
             self._session.commit()
@@ -56,31 +54,4 @@ class RegistrationService:
         except Exception as e:
             print("\n\n\nThere was an Exception:", e, "\n\n\n")
             return
-        
-        
-        #try: 
-        #    query = select(WorkshopEntity).where(WorkshopEntity.host_id == subject_id)
-        #    workshop_entities: list[WorkshopEntity] = self._session.execute(query).scalars().all()
-        #    if not workshop_entities:
-        #        return []
-        #    else:
-        #        workshop_models: list[Workshop] = [entity.to_model() for entity in workshop_entities]
-        #        return workshop_models
-        #except Exception as e:
-        #    print("\n\n\n The exception:")
-        #    print(e)
-        #    return []
     
-    #def get_attendees(self, subject_id: int) -> List[Workshop]:
-    #    try: 
-    #        query = select(UserEntity).where(UserEntity.id == subject_id)
-    #        workshop_entities: list[WorkshopEntity] = self._session.execute(query).scalars().all()
-    #        if not workshop_entities:
-    #            return []
-    #        else:
-    #            workshop_models: list[Workshop] = [entity.to_model() for entity in workshop_entities]
-    #            return workshop_models
-    #    except Exception as e:
-    #        print("\n\n\n The exception:")
-    #        print(e)
-    #        return []

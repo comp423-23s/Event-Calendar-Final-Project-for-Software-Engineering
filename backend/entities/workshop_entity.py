@@ -52,8 +52,6 @@ class WorkshopEntity(EntityBase):
             location=model.location,
             date=model.date,
             host_id=model.host_id
-            #host = model.host,
-            #attendees = model.attendees
         )
 
     #Args: nothing
