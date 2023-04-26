@@ -4,15 +4,14 @@ from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
 from ..models import Workshop, NewWorkshop
-from ..entities import WorkshopEntity, UserEntity
-from datetime import datetime
+from ..entities import WorkshopEntity
+
 
 class WorkshopService:
     #the service containing all of the functions for managing workshop models in the database. 
     #these functions are called by the file backend\api\workshop.py
     # Attributes: _session: a sqlalchemy session for connecting the functions with the database
     #             _user_svc: a copy of UserService to assist with getting user info for the functions
-
 
     _session: Session
     _user_svc: UserService
@@ -21,23 +20,6 @@ class WorkshopService:
         self._session = session
         self._user_svc = UserService(session)
 
-
-    #Args: None
-    #Returns: the list of all Workshop models currently stored
-    #Raises: Nothing
-    def list(self) -> list[Workshop]:
-        query = select(WorkshopEntity)
-        workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
-        result = []
-        for workshop_entity in workshop_entities:
-            attendees = []
-            for a in workshop_entity.attendees:
-                attendees.append(a.to_model())
-            host = self._user_svc.search_by_id(workshop_entity.host_id)
-            model = workshop_entity.to_model_w_users(host, attendees)
-            result.append(model)
-        return result
-        
         
     #Args: a NewWorkshop model workshop representing the workshop to be created
     #Returns: A copy of the created Workshop model, or None if no workshop was created
@@ -47,7 +29,6 @@ class WorkshopService:
         self._session.add(workshop_entity)
         self._session.commit()
         return workshop_entity.to_model()
-
 
     #Args: int id representing the id of the workshop to be deleted
     #Returns: a copy of the deleted Workshop model, or None if no workshop was deleted
@@ -74,7 +55,7 @@ class WorkshopService:
         except Exception as e:
             print(e)
             return None
-        
+
 
     def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
         if attendee_id == None | workshop_id == None:

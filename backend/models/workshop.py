@@ -1,7 +1,7 @@
 """Workshop is the data object"""
 
 from pydantic import BaseModel
-from . import User
+from .user import User
 from datetime import datetime
 
 
@@ -12,6 +12,14 @@ __license__ = "MIT"
 
 
 class Workshop(BaseModel):
+    id: int 
+    title: str
+    description: str = "No description provided for this event."
+    location: str = "Location TBD"
+    date: datetime | None = None
+    host_id: int = 1
+
+class Workshop_Users(BaseModel):
     id: int 
     title: str
     description: str = "No description provided for this event."
