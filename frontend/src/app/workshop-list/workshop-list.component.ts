@@ -16,16 +16,16 @@ import { Profile } from '../profile/profile.service';
 export class WorkshopListComponent {
 
   public workshops$: Observable<Workshop[]>;
-  workshopService: WorkshopListService
+  workshopListService: WorkshopListService
   public adminPermission$: Observable<boolean>;
   private user$: User | null = null;
 
-  constructor(workshopService: WorkshopListService, 
+  constructor(workshopListService: WorkshopListService, 
     private workshopDeleteService: WorkshopDeleteService, 
     private permission: PermissionService, 
     private registerService: WorkshopRegisterService) {
-    this.workshops$ = workshopService.getWorkshops();
-    this.workshopService = workshopService;
+    this.workshops$ = workshopListService.getWorkshops();
+    this.workshopListService = workshopListService;
     this.adminPermission$ = this.permission.check('admin.view', 'admin/');
     registerService.getUser().subscribe(profile => {
       if(profile) {
@@ -58,8 +58,8 @@ export class WorkshopListComponent {
       None.
 
     */
-    this.workshops$ = this.workshopService.getWorkshops();
-    return this.workshopService.getWorkshops();
+    this.workshops$ = this.workshopListService.getWorkshops();
+    return this.workshopListService.getWorkshops();
   }
   
   deleteWorkshop(id: number){
@@ -86,7 +86,7 @@ export class WorkshopListComponent {
   //Gives a success message and updates workshop list, since one has been deleted.
   onDelSuccess(msg: Workshop){
       window.alert("Workshop has been deleted.")
-      this.workshops$ = this.workshopService.getWorkshops();
+      this.workshops$ = this.workshopListService.getWorkshops();
   }
 
   //Passes on error message to user.
