@@ -64,9 +64,21 @@ export class MyWorkshopsComponent {
 
   }
 
-  
 
   updateWorkshops(workshop: Workshop) {
+    /*
+   Calls updateWorkshop() from the MyWorkshopsService. 
+
+   Args:
+     The workshop you are updating
+   
+   Returns:
+     None.
+
+   Raises:
+     Error 
+
+   */
     let form = this.form.value;
     let workshop_id = workshop.id;
     let title = form.title ?? workshop.title ?? "";

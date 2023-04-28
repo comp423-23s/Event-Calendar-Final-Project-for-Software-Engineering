@@ -11,6 +11,26 @@ export class WorkshopUpdateService {
 
   constructor(protected http: HttpClient) { }
 
+  /**
+   Returns the updated workshop or an Error.
+
+      Args:
+        workshop_id: number
+        title: string,
+        description: string,
+        location: string, 
+        date: string,
+        hostid: number,
+        user: User
+      
+      Returns:
+        The updated workshop or an Error.
+
+      Raises:
+        Error: No date provided.,
+        Error: No description provided.,
+        Error: No location provided..
+   */
   updateWorkshop(workshop_id: number, title: String, description: String, location: String, date: string): Observable<Workshop>{
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
     if(date === null || date === ""){
@@ -27,7 +47,7 @@ export class WorkshopUpdateService {
       return throwError(() => new Error("No location provided."));
     }
 
-    //creates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
+    //updates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
     let returnWorkshop: WorkshopNoHost = {
       title: title,
       description: description,
