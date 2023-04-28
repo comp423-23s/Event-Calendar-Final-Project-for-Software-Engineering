@@ -71,6 +71,7 @@ class WorkshopEntity(EntityBase):
     #Returns: a Workshop model with identical parameters to the WorkshopEntity that calls it
     #Raises: Nothing
     def to_model_w_users(self, _host: User=None, _attendees: list[User]=None) -> Workshop_Users:
+    #def to_model_w_users(self, _host: User=None) -> Workshop_Users:
         return Workshop_Users(
             id=self.id,
             title=self.title,
@@ -79,7 +80,7 @@ class WorkshopEntity(EntityBase):
             date=self.date,
             host_id = self.host_id,
             host=_host,
-            attendees =_attendees
+            attendees=_attendees
         )
 
     #Args: a Workshop model called model containing the new Workshop settings you wish to update
