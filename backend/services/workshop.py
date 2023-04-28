@@ -3,7 +3,7 @@ from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop
+from ..models import Workshop, NewWorkshop, Workshop_NoHost
 from ..entities import WorkshopEntity
 
 
@@ -75,8 +75,8 @@ class WorkshopService:
     #Args: int workshop_id representing the id of the workshop to be updated, and a Workshop model named new_Workshop holding the data to be updated into the workshop
     #Returns: a copy of the updated Workshop model, or None if no workshop was deleted
     #Raises: Nothing
-    def update_workshop(self, workshop_id: int, new_workshop: Workshop) -> Workshop | None:
-        if not(workshop_id and Workshop):
+    def update_workshop(self, workshop_id: int, new_workshop: Workshop_NoHost) -> Workshop | None:
+        if not(workshop_id and new_workshop):
             return
         entity = self._session.get(WorkshopEntity, workshop_id)
         if(entity == None): 

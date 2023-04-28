@@ -3,7 +3,7 @@ from sqlalchemy import Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Self
 from .entity_base import EntityBase
-from ..models import Workshop, User, NewWorkshop, Workshop_Users
+from ..models import Workshop, User, NewWorkshop, Workshop_Users, Workshop_NoHost
 from datetime import datetime
 from .workshop_attendee_entity import workshop_attendee_table
 
@@ -85,7 +85,7 @@ class WorkshopEntity(EntityBase):
     #Args: a Workshop model called model containing the new Workshop settings you wish to update
     #Returns: Nothing
     #Raises: Nothing
-    def update(self, model: Workshop) -> None:
+    def update(self, model: Workshop_NoHost) -> None:
         self.title = model.title
         self.description = model.description
         self.location  = model.location

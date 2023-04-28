@@ -5,6 +5,8 @@ import { MyWorkshopsService } from '../my-workshops.service';
 import { User, Workshop, WorkshopListService } from '../workshop-list.service';
 import { Observable, throwError } from 'rxjs';
 import { WorkshopDeleteService } from '../workshop-delete.service';
+import { WorkshopUpdateService } from '../workshop-update.service';
+import {FormBuilder} from '@angular/forms';
 
 
 @Component({
@@ -24,9 +26,19 @@ export class MyWorkshopsComponent {
     canActivate: [isAuthenticated], 
   };
 
+  form = this.formBuilder.group({
+    //title, decription, date, location
+    title: '',
+    description: '',
+    date: '',
+    location: ''
+  })
+
   constructor(private myWorkshopsService: MyWorkshopsService, 
     private workshopDeleteService: WorkshopDeleteService, 
-    private workshopListService: WorkshopListService) {
+    private workshopListService: WorkshopListService, 
+    private workshopUpdateService: WorkshopUpdateService, 
+    private formBuilder: FormBuilder,) {
       
     myWorkshopsService.getUser().subscribe(profile => {
       if(profile) {
@@ -50,6 +62,45 @@ export class MyWorkshopsComponent {
       throwError(() => new Error("User is null."));
     }
 
+  }
+
+  
+
+  updateWorkshops(workshop: Workshop) {
+    let form = this.form.value;
+    let workshop_id = workshop.id;
+    let title = form.title ?? workshop.title ?? "";
+    let description = form.description ?? workshop.description ?? "";
+    let date = form.date?? workshop.date ?? "";
+    date = date.toString();
+    let location = form.location ?? workshop.location ?? "";
+
+    this.workshopUpdateService
+      .updateWorkshop(workshop_id, title, description, location, date)
+      .subscribe({
+        next: (workshop) => this.onSuccess(workshop),
+        error: (err) => this.onError(err)
+      })
+
+  }
+
+
+  //Handles success message that occures when trying to update a workshop during the onSumbit function.
+  //Nice to have: Make it so  it is not window alerts but intergated into the website HTML.
+  private onSuccess(updatedWorkshop: Workshop): void{
+    window.alert('Workshop has been updated!');
+    this.form.reset(); 
+  }
+
+  //Handles errors that occured when trying to update a workshop during the onSumbit function.
+  //Nice to have: Make it so it is not window alerts but intergated into the website HTML.
+  private onError(err: Error){
+    if(err.message){
+      window.alert(err.message);
+    }
+    else{
+      window.alert("Unkown Error: " + JSON.stringify(err));
+    }
   }
 
   getHosting() {
