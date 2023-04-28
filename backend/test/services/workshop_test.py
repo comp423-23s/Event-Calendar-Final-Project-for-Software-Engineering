@@ -1,6 +1,8 @@
 import pytest
 
 from sqlalchemy.orm import Session
+
+from ...services.registration import RegistrationService
 from ...models import User, Role, Permission, Workshop
 from ...entities import UserEntity, RoleEntity, PermissionEntity, WorkshopEntity
 from ...services.workshop import  WorkshopService
@@ -17,9 +19,9 @@ from datetime import datetime
 #these are sample users and workshops for the below tests to use
 user = User(id=1, pid=999999999, onyen='root', email='root@unc.edu')
 
-workshop1 = Workshop(id=1, title="Workshop1", description="this is a sample description for workshop1", location="Sitterson Hall", date=datetime(2023, 4, 5, 12, 0), host_id=1)
-workshop2 = Workshop(id=2, title="Workshop2", description="this is a sample description for workshop2", location="Dey Hall", date=datetime(2023, 4, 5, 11, 0), host_id=1)
-workshop3 = Workshop(id=3, title="Workshop3", description="this is a sample description for workshop3", location="Genome Science Building", date=datetime(2023, 4, 5, 11, 0), host_id=1)
+workshop1 = Workshop(id=1, title="Workshop1", description="this is a sample description for workshop1", location="Sitterson Hall", date=datetime(2023, 4, 5, 12, 0), host_id=1, attendees=[])
+workshop2 = Workshop(id=2, title="Workshop2", description="this is a sample description for workshop2", location="Dey Hall", date=datetime(2023, 4, 5, 11, 0), host_id=1, attendees=[])
+workshop3 = Workshop(id=3, title="Workshop3", description="this is a sample description for workshop3", location="Genome Science Building", date=datetime(2023, 4, 5, 11, 0), host_id=1, attendees=[])
 
 @pytest.fixture(autouse=True)
 def setup_teardown(test_session: Session):
@@ -85,4 +87,7 @@ def test_delete_nonexistant_workshop(workshop: WorkshopService):
     assert len(workshop.list()) == 2
     
     
-
+# Tests registering for a workshop
+def test_register(registration: RegistrationService):
+    registration.add_attendee(user, workshop1)
+    assert len(workshop1.attendees) == 1

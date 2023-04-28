@@ -27,22 +27,24 @@ export class MyWorkshopsService {
     return this.http.get<User>("/api/profile");
   }
 
-  getHosting(): Observable<Workshop[]> | null {
+  getHosting(user: User): Observable<Workshop[]> | null {
     /*
-    Calls the API to get the host.
+    Gets the list of workshops the user is hosting.
 
     Args:
-      None.
+      user: User.
     
     Returns:
-      None.
+      Observable<Workshop[]> | null.
 
     Raises:
       None.
 
     */
-    return null;
-  }
+      let tempString = '/api/user/hosting/{id}?i=' + user.id
+      console.log("get hosting api call")
+      return this.http.get<Workshop[]>(tempString);
+    }
 
   getAttending(user: User): Observable<Workshop[]> | null {
     /*
@@ -52,13 +54,15 @@ export class MyWorkshopsService {
       user: User.
     
     Returns:
-      None.
+      Observable<Workshop[]> | null.
 
     Raises:
       None.
 
     */
-    return null;
+      let tempString = '/api/user/attending/{id}?i=' + user.id
+      console.log("get attending api call")
+      return this.http.get<Workshop[]>(tempString);
   }
 
 }

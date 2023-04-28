@@ -40,7 +40,7 @@ class RegistrationService:
     #Args: Workshop id, User id
     #Returns: adds the user as an attendee for a workshop, returns the updated workshop
     #Raises: Nothing
-    def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
+    def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop_Users | None:
         query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
         workshop_entity: WorkshopEntity = self._session.scalar(query)
         attendee: User = self._user.search_by_id(attendee_id)
