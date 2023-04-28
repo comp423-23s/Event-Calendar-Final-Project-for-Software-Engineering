@@ -1,6 +1,8 @@
 from fastapi import Depends
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
+
+from backend.entities.user_entity import UserEntity
 from ..database import db_session
 from . import UserService
 from ..models import Workshop, NewWorkshop
