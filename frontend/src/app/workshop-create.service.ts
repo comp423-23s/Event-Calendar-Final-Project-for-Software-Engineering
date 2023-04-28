@@ -60,6 +60,26 @@ export class WorkshopCreateService {
 
   createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
+    if(title === null || title === ""){
+      return throwError(() => new Error("No title provided"))
+    }
+    if (title.length < 5){
+      return throwError(() => new Error("Title must be at least five characters long"));
+    }
+    let white_space:boolean = true;
+
+    for(let i = 0; i < title.length; i++ ){
+      if(title.charAt(i) == " " || title.charAt(i) == "  "){
+        continue
+      }
+      else{ 
+        white_space = false;
+      }
+    }
+    if(white_space == true){
+      return throwError(() => new Error("title cannot be all white space"))
+    }
+    
     if(date === null || date === ""){
       return throwError(() => new Error("No date provided."));
     }
