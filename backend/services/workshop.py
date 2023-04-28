@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from backend.entities.user_entity import UserEntity
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop
+from ..models import Workshop, NewWorkshop, Workshop_NoHost
 from ..entities import WorkshopEntity
 
 
@@ -57,28 +57,12 @@ class WorkshopService:
         except Exception as e:
             print(e)
             return None
-
-
-    #def add_attendee(self, workshop_id: int, attendee_id: int) -> Workshop | None:
-    #    if attendee_id == None | workshop_id == None:
-    #        return
-    #    query = select(WorkshopEntity).where(WorkshopEntity.id == workshop_id)
-    #    workshop_entity: WorkshopEntity = self._session.scalar(query)
-    #    attendee = self._user_svc.search_by_id(attendee_id)
-    #    if attendee == None:
-    #        return
-    #    attendee_entity = UserEntity.from_model(attendee)
-    #    if workshop_entity != None:
-    #        self._session.add(workshop_entity, attendee_entity)
-    #        self._session.commit()
-    #        return workshop_entity.to_model()
-    #    return
     
     #Args: int workshop_id representing the id of the workshop to be updated, and a Workshop model named new_Workshop holding the data to be updated into the workshop
     #Returns: a copy of the updated Workshop model, or None if no workshop was deleted
     #Raises: Nothing
-    def update_workshop(self, workshop_id: int, new_workshop: Workshop) -> Workshop | None:
-        if not(workshop_id and Workshop):
+    def update_workshop(self, workshop_id: int, new_workshop: Workshop_NoHost) -> Workshop | None:
+        if not(workshop_id and new_workshop):
             return
         entity = self._session.get(WorkshopEntity, workshop_id)
         if(entity == None): 
