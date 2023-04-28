@@ -42,26 +42,38 @@ export class MyWorkshopsComponent {
       
     myWorkshopsService.getUser().subscribe(profile => {
       if(profile) {
+        console.log("profile acknowledged")
         this.user$ = profile;
+
+        if(this.user$) {
+          console.log("about to see if hosting is null")
+          if(this.myWorkshopsService.getHosting(this.user$)) {
+            console.log("initializing hosting")
+            this.workshopsHosting$ = this.myWorkshopsService.getHosting(this.user$);
+          }
+        }
+        else {
+          console.log("error: user is null")
+          throwError(() => new Error("User is null."));
+        }
+
+        if(this.user$) {
+          console.log("about to see if attending is null")
+          if(this.myWorkshopsService.getAttending(this.user$)) {
+            console.log("initializing attending")
+            this.workshopsAttending$ = this.myWorkshopsService.getAttending(this.user$);
+          }
+        }
+        else {
+          console.log("error: user is null")
+          throwError(() => new Error("User is null."));
+        }
+
       }
       else {
         this.user$ = null;
-      }
+      }      
     });
-
-    if(this.myWorkshopsService.getHosting()) {
-      this.workshopsHosting$ = this.myWorkshopsService.getHosting();
-    }
-
-    if(this.user$) {
-      if(this.myWorkshopsService.getAttending(this.user$)) {
-        this.workshopsAttending$ = this.myWorkshopsService.getAttending(this.user$);
-      }
-    }
-    else {
-      throwError(() => new Error("User is null."));
-    }
-
   }
 
 
@@ -126,10 +138,16 @@ export class MyWorkshopsComponent {
      None.
 
    Raises:
-     None.
+     Error.
 
    */
-    this.myWorkshopsService.getHosting();
+    if(this.user$) {
+      console.log("get hosting calling service")
+      this.workshopsHosting$ = this.myWorkshopsService.getHosting(this.user$);
+    }
+    else {
+      throwError(() => new Error("User is null."));
+    }
   }
 
   getAttending() {
@@ -147,7 +165,8 @@ export class MyWorkshopsComponent {
 
    */
     if(this.user$) {
-      this.myWorkshopsService.getAttending(this.user$);
+      console.log("get attending calling service")
+      this.workshopsAttending$ = this.myWorkshopsService.getAttending(this.user$);
     }
     else {
       throwError(() => new Error("User is null."));
@@ -178,8 +197,8 @@ export class MyWorkshopsComponent {
  //Gives a success message and updates workshop list, since one has been deleted.
  onDelSuccess(msg: Workshop){
      window.alert("Workshop has been deleted.")
-     this.workshopsHosting$ = this.myWorkshopsService.getHosting();
      if(this.user$) {
+      this.workshopsHosting$ = this.myWorkshopsService.getHosting(this.user$);
       this.workshopsAttending$ = this.myWorkshopsService.getAttending(this.user$);
      }
      else {

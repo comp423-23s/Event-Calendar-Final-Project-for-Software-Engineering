@@ -29,7 +29,7 @@ def search_by_id(q: int, workshop_svc: WorkshopService = Depends()) -> Workshop 
 
 #Add an attendee to a workshop. Takes in the id of the workshop to register to, and uses workshop_service as a dependency.
 @api.post("/register", response_model=Workshop | None, tags=['Workshops'])
-def register_attendee(workshop_id: int, attendee_id: int, registration_svc: RegistrationService = Depends()) -> Workshop | None:
+def register_attendee(workshop_id: int, attendee_id: int, registration_svc: RegistrationService = Depends()) -> None:
     return registration_svc.add_attendee(workshop_id, attendee_id)
 
 #Updates the workshop with the given workshop id using the parameters of the new workshop passed in. 
