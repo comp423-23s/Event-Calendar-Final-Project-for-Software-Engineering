@@ -30,7 +30,8 @@ This function returns list of workshop models. It uses workshop_service as a dep
 return this.http.get<Workshop[]>("/api/workshop");
 ```
 This function allows the 'All Workshops' page to display all workshops currently in the database.
-![Picture of the 'All Workshops' page which shows a scrollable list of workshops from a student view.](/workspace/frontend/src/assets/workshop-list-example.png)
+
+<img src="/workspace/docs/images/workshop-list-example.png">
 
  __Delete:__
  
@@ -45,7 +46,9 @@ This function allows the 'All Workshops' page to display all workshops currently
   return this.http.delete<Workshop>(tempString)
   ```
   This function allowed us to have a `Delete` button for Administratiors:
-  ![Picture of the 'All Workshops' page from the Administrator's point of view, includes delete button.](frontend/src/assets/workshop-delete-example.png)
+
+
+<img src="/workspace/docs/images/workshop-delete-example.png">
 
 ## Implementation Notes 
 __'Models'__
@@ -74,10 +77,10 @@ __workshop_attendee_table:__
 | user_id (integer) | workshop_id (integer) |
 | --- | --- |
 |primary_key = true | primary_key = True |
-| | |
+
 
 Example from current database query:
-![Screenshot of a workshop attendee query.](frontend/src/assets/workshop-attendee-table-ex.png)
+<img src="/workspace/docs/images/workshop-attendee-table-ex.png">
 
 
 ## Development Concerns
@@ -86,4 +89,4 @@ To begin work on this app, you should first skim over the contents of the backen
 
 
 ## Future Work
-We hope to allow users to register for workshops and update the workshops they host. We are also always aiming for a better and more user friendly UI and formating.
+We hope to allow users to register for workshops and update the workshops they host. We are also always aiming for a better and more user friendly UI and formating. We also want to be stricter on what can be inputed for 
