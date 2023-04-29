@@ -18,9 +18,9 @@ interface User{
 export interface Workshop {
   id: number,
   title: String;
-  description: String | null;
-  location: String | null;
-  date: Date | null;
+  description: String;
+  location: String;
+  date: Date;
   host_id: number | null
   host: User | null
   attendees: User[] | null;

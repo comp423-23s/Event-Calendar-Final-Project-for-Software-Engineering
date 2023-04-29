@@ -42,7 +42,6 @@ export class MyWorkshopsService {
 
     */
       let tempString = '/api/user/hosting/{id}?i=' + user.id
-      console.log("get hosting api call")
       return this.http.get<Workshop[]>(tempString);
     }
 
@@ -61,7 +60,6 @@ export class MyWorkshopsService {
 
     */
       let tempString = '/api/user/attending/{id}?i=' + user.id
-      console.log("get attending api call")
       return this.http.get<Workshop[]>(tempString);
   }
 

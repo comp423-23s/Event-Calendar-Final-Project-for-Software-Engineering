@@ -7,6 +7,7 @@ import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.
 import { WorkshopListComponent } from './workshop-list/workshop-list.component';
 import { WorkshopCreateComponent } from './workshop-create/workshop-create.component';
 import { MyWorkshopsComponent } from './my-workshops/my-workshops.component';
+import { WorkshopUpdateComponent } from './workshop-update/workshop-update.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   MyWorkshopsComponent.Route,
   WorkshopListComponent.Route,
   WorkshopCreateComponent.Route,
+  WorkshopUpdateComponent.Route,
   GateComponent.Route,
   { path: 'admin', title: 'Admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
 ];
