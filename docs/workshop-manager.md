@@ -3,7 +3,7 @@
 
 ## Overview
 
- We implemented everything you'd need to host workshops on the CSXL website. The first page we implmented is 'All Workshops' and is a list of all upcoming workshops. We made it possible for users to create workshops under the 'Create Workshops' page. When Administrators view this page they also see a delete button that deletes that workshop. Users with Administrative or above permisions are the only ones who can delete workshops. 
+ We implemented everything you'd need to host workshops on the CSXL website. The first page we implmented is 'All Workshops' and is a list of all upcoming workshops. We made it possible for users to create workshops under the 'Create Workshops' page. When Administrators view this page they also see a delete button that deletes that workshop. Users also have the option to register for a workshop! We also have a "my workshops" page where users can see what workshops they are hosting and attending. For workshops the user is hosting they can delete and edit them. 
 
 ### High Level Functions
 
@@ -89,4 +89,4 @@ To begin work on this app, you should first skim over the contents of the backen
 
 
 ## Future Work
-We hope to allow users to register for workshops and update the workshops they host. We are also always aiming for a better and more user friendly UI and formating. We also want to be stricter on what can be inputed for 
+We hope to allow users to register for workshops and update the workshops they host. We are also always aiming for a better and more user friendly UI and formating. We also want to be stricter on what can be inputed in our forms.
