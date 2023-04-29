@@ -43,7 +43,38 @@ return this.http.get<Workshop[]>("/api/workshop");
 ```
 This function allows the 'All Workshops' page to display all workshops currently in the database.
 
-<img src="/workspace/docs/images/workshop-list-example.png">
+![image](https://user-images.githubusercontent.com/97571121/235318891-d8039b1b-94e8-4ef5-bb51-307fae65e96c.png)
+
+
+__Update:__
+
+This function updates the workshop with the given workshop id using the parameters of the new workshop passed in. It takes in an id of the workshop to update, a workshop model with the new arguments to be updated and uses workshop_service as a dependency. Note: neither the host nor the workshop_id are updated by this function.
+```
+@api.put("", response_model=Workshop | None, tags=['Workshops'])
+```
+
+Example usage is in workshop-update.service file:
+```
+    let returnWorkshop: = {
+          id: 0,
+          title: title,
+          description: description,
+          location: location,
+          date: dateAsDate,
+          host_id: 0
+        }
+    let tempstring = '/api/workshop?workshop_id=' + id;
+    return this.http.put<Workshop>(tempstring, returnWorkshop); 
+```
+This function allows a user to update the workshop's title, description, location, and date in the 'Edit Workshop' Page, which is accessible through the 'My Workshops' Page after hitting the edit button of workshops you are hosting.  
+
+My Workshops -> Edit
+![image](https://user-images.githubusercontent.com/97571121/235318854-050c7eb7-e125-46f3-b5d3-5a0864aa8697.png)
+
+The save button calls the update method in workshop-update.service which uses the code in the example above to call the update API function.
+
+
+![image](https://user-images.githubusercontent.com/97571121/235318821-e2016a70-7cec-43d1-84e8-0f51e990dd67.png)
 
 
 __Update:__
@@ -90,7 +121,7 @@ The save button calls the update method in workshop-update.service which uses th
   This function allowed us to have a `Delete` button for Administratiors:
 
 
-<img src="/workspace/docs/images/workshop-delete-example.png">
+![image](https://user-images.githubusercontent.com/97571121/235318918-2fad6bd1-a455-425f-99db-08713d4193cc.png)
 
 ## Implementation Notes 
 __'Models'__
@@ -122,7 +153,10 @@ __workshop_attendee_table:__
 
 Example from current database query:
 
-<img src="/workspace/docs/images/workshop-attendee-table-ex.png">
+
+![image](https://user-images.githubusercontent.com/97571121/235318864-b59372a0-d799-4409-877c-e11e6329a04f.png)
+
+
 
 
 
