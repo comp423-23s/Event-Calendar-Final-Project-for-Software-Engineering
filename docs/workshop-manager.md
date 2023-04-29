@@ -73,6 +73,7 @@ My Workshops -> Edit
 
 The save button calls the update method in workshop-update.service which uses the code in the example above to call the update API function.
 
+
 ![image](https://user-images.githubusercontent.com/97571121/235318821-e2016a70-7cec-43d1-84e8-0f51e990dd67.png)
 
  __Delete:__
