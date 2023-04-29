@@ -41,31 +41,34 @@ export class WorkshopUpdateService {
     else{
       let dateAsDate: Date = new Date(date);
     
-    if(description === null || description === ""){
-      return throwError(() => new Error("No description provided."));
-    }
+      if(description === null || description === ""){
+        return throwError(() => new Error("No description provided."));
+      }
 
-    if(location === null || location === ""){
-      return throwError(() => new Error("No location provided."));
-    }
+      if(location === null || location === ""){
+        return throwError(() => new Error("No location provided."));
+      }
 
-    //updates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
-    let returnWorkshop: WorkshopNoHost = {
-      title: title,
-      description: description,
-      location: location,
-      date: dateAsDate
-    }
-    let tempstring = '/api/workshop?workshop_id=' + id;
-    return this.http.put<Workshop>(tempstring, returnWorkshop);      
-    }
-   }
+      //updates a workshop object to pass through to the API, id and host is handled in the backend null is temporary.
+      let returnWorkshop = {
+        id: 0,
+        title: title,
+        description: description,
+        location: location,
+        date: dateAsDate,
+        host_id: 0
+      }
+      let tempstring = '/api/workshop?workshop_id=' + id;
+      return this.http.put<Workshop>(tempstring, returnWorkshop); 
+    }     
+  }
+   
 
-   setWorkshop(workshop: Workshop) {
+  setWorkshop(workshop: Workshop) {
     this.workshop$ = workshop;
-   }
+  }
 
-   getWorkshop(): Workshop | null {
+  getWorkshop(): Workshop | null {
     if(this.workshop$) {
       return this.workshop$;
     }
@@ -73,8 +76,8 @@ export class WorkshopUpdateService {
       throwError(() => new Error("Workshop is null."));
       return null;
     }
-   }
-}
+  }   
 
+}
 
  
