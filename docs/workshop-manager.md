@@ -72,6 +72,7 @@ My Workshops -> Edit
 ![image](https://user-images.githubusercontent.com/97571121/235318854-050c7eb7-e125-46f3-b5d3-5a0864aa8697.png)
 
 The save button calls the update method in workshop-update.service which uses the code in the example above to call the update API function.
+
 ![image](https://user-images.githubusercontent.com/97571121/235318821-e2016a70-7cec-43d1-84e8-0f51e990dd67.png)
 
  __Delete:__
@@ -90,7 +91,7 @@ The save button calls the update method in workshop-update.service which uses th
   This function allowed us to have a `Delete` button for Administratiors:
 
 
-<img src="/workspace/docs/images/workshop-delete-example.png">
+![image](https://user-images.githubusercontent.com/97571121/235318918-2fad6bd1-a455-425f-99db-08713d4193cc.png)
 
 ## Implementation Notes 
 __'Models'__
