@@ -1,18 +1,19 @@
 from fastapi import Depends
 from sqlalchemy import select, or_, func
 from sqlalchemy.orm import Session
+
+from backend.entities.user_entity import UserEntity
 from ..database import db_session
 from . import UserService
-from ..models import Workshop, NewWorkshop
-from ..entities import WorkshopEntity, UserEntity
-from datetime import datetime
+from ..models import Workshop, NewWorkshop, Workshop_NoHost
+from ..entities import WorkshopEntity
+
 
 class WorkshopService:
     #the service containing all of the functions for managing workshop models in the database. 
     #these functions are called by the file backend\api\workshop.py
     # Attributes: _session: a sqlalchemy session for connecting the functions with the database
     #             _user_svc: a copy of UserService to assist with getting user info for the functions
-
 
     _session: Session
     _user_svc: UserService
@@ -21,30 +22,14 @@ class WorkshopService:
         self._session = session
         self._user_svc = UserService(session)
 
-    #Args: None
-    #Returns: the list of all Workshop models currently stored
-    #Raises: Nothing
-    def list(self) -> list[Workshop]:
-        query = select(WorkshopEntity)
-        workshop_entities: WorkshopEntity = self._session.execute(query).scalars()
-        result = []
-        for workshop_entity in workshop_entities:
-            host = self._user_svc.search_by_id(workshop_entity.host_id)
-            model = workshop_entity.to_model_w_host(host)
-            result.append(model)
-        return result
         
     #Args: a NewWorkshop model workshop representing the workshop to be created
     #Returns: A copy of the created Workshop model, or None if no workshop was created
     #Raises: Nothing
     def add(self, workshop: NewWorkshop) -> Workshop | None:
-        print("workshop:", workshop, "\n\n\n")
         workshop_entity = WorkshopEntity.from_model_new_user(workshop)
-        print("workshop_entity = WorkshopEntity.from_model(workshop) -- done \n\n\n")
         self._session.add(workshop_entity)
-        print("self._session.add(workshop_entity) -- done\n\n\n")
         self._session.commit()
-        print("self._session.commit() -- done\n\n\n")
         return workshop_entity.to_model()
 
     #Args: int id representing the id of the workshop to be deleted
@@ -59,3 +44,31 @@ class WorkshopService:
             return workshop_entity.to_model()
         else:
             return
+
+    def search_by_id(self, i: int) -> Workshop | None:
+        try: 
+            query = select(WorkshopEntity).where(WorkshopEntity.id == i)
+            workshop_entity: WorkshopEntity = self._session.scalar(query)
+            if workshop_entity is None:
+                return None
+            else:
+                model = workshop_entity.to_model()
+                return model
+        except Exception as e:
+            print(e)
+            return None
+    
+    #Args: int workshop_id representing the id of the workshop to be updated, and a Workshop model named new_Workshop holding the data to be updated into the workshop
+    #Returns: a copy of the updated Workshop model, or None if no workshop was deleted
+    #Raises: Nothing
+    def update_workshop(self, workshop_id: int, new_workshop: Workshop_NoHost) -> Workshop | None:
+        if not(workshop_id and new_workshop):
+            return
+        entity = self._session.get(WorkshopEntity, workshop_id)
+        if(entity == None): 
+            raise Exception(f"Workshop with id {workshop_id} not found. You can only update workshops already in existance")
+        entity.update(new_workshop)
+        self._session.commit()
+        return entity.to_model()
+        
+

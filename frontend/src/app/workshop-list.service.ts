@@ -17,12 +17,19 @@ export interface User{
 export interface Workshop {
   id: number;
   title: String;
+  description: String;
+  location: String;
+  date: Date;
+  host_id: number | null;
+  host: User | null;
+  attendees: User[] | null;
+}
+
+export interface WorkshopNoHost {
+  title: String;
   description: String | null;
   location: String | null;
   date: Date | null;
-  host_id: number | null
-  host: User | null
-
 }
 
 @Injectable({
