@@ -68,8 +68,11 @@ export class WorkshopCreateService {
       return throwError(() => new Error("Title must be at least five characters long"));
     }
     //checks that title is not all white space
-    if(this.isWhiteSpace(title)){
+    /*if(this.isWhiteSpace(title)){
       return throwError(() => new Error("title cannot be all white space"))
+    }*/
+    if(this.whiteSpace(title) < 5){
+      return throwError(() => new Error("The title must have at least 5 characters that aren't white space!"))
     }
     //makes sure date is provided
     if(date === null || date === ""){
@@ -87,9 +90,13 @@ export class WorkshopCreateService {
       return throwError(() => new Error("The description must be at least 5 characters long"))
     }
     //makes sure the description is not all white space
-    if(this.isWhiteSpace(description)){
+    /*if(this.isWhiteSpace(description)){
       return throwError(() => new Error("description cannot be all white space"))
+    }*/
+    if(this.whiteSpace(description) < 5){
+      return throwError(() => new Error("The description must have at least 5 characters that aren't white space!"))
     }
+
     //makes sure there is a location
     if(location === null || location === ""){
       return throwError(() => new Error("No location provided."));
@@ -99,8 +106,11 @@ export class WorkshopCreateService {
       return throwError(() => new Error("The location must be at least 4 characters long"))
     }
     //makes sure the location is not all white space
-    if(this.isWhiteSpace(location)){
+    /*if(this.isWhiteSpace(location)){
       return throwError(() => new Error("location cannot be all white space"))
+    }*/
+    if(this.whiteSpace(location) < 4){
+      return throwError(() => new Error("The location must have at least 4 characters that aren't white space!"))
     }
     //if hostID is null or undefined an error is thrown.
     if (hostid == null || hostid ==undefined){
@@ -128,7 +138,7 @@ export class WorkshopCreateService {
    }
 
   //takes in a string. Returns true if the string is all white space, false if it isn't
-  isWhiteSpace(string: String){
+  /*isWhiteSpace(string: String){
     let white_space:boolean  = true;
     for(let i = 0; i < string.length; i++ ){
       if(string.charAt(i) == " " || string.charAt(i) == "  "){
@@ -142,5 +152,18 @@ export class WorkshopCreateService {
       return true
     }
     return false
+  }*/
+  whiteSpace(string: String){
+    let white_space:number = 0;
+    for(let i = 0; i < string.length; i++ ){
+      if(string.charAt(i) == " " || string.charAt(i) == "  "){
+        continue
+      }
+      else{ 
+        white_space++;
+      }
+    }
+    return white_space;
+
   }
-  }
+}
