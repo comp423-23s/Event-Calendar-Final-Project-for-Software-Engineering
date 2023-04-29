@@ -43,7 +43,7 @@ return this.http.get<Workshop[]>("/api/workshop");
 ```
 This function allows the 'All Workshops' page to display all workshops currently in the database.
 
-<img src="/workspace/docs/images/workshop-list-example.png">
+<img src="docs/images/workshop-my-workshops-ex.png">
 
 
 __Update:__
