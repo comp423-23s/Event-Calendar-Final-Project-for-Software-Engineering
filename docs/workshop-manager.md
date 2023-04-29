@@ -76,35 +76,6 @@ The save button calls the update method in workshop-update.service which uses th
 
 ![image](https://user-images.githubusercontent.com/97571121/235318821-e2016a70-7cec-43d1-84e8-0f51e990dd67.png)
 
-
-__Update:__
-
-This function updates the workshop with the given workshop id using the parameters of the new workshop passed in. It takes in an id of the workshop to update, a workshop model with the new arguments to be updated and uses workshop_service as a dependency. Note: neither the host nor the workshop_id are updated by this function.
-```
-@api.put("", response_model=Workshop | None, tags=['Workshops'])
-```
-
-Example usage is in workshop-update.service file:
-```
-    let returnWorkshop: = {
-          id: 0,
-          title: title,
-          description: description,
-          location: location,
-          date: dateAsDate,
-          host_id: 0
-        }
-    let tempstring = '/api/workshop?workshop_id=' + id;
-    return this.http.put<Workshop>(tempstring, returnWorkshop); 
-```
-This function allows a user to update the workshop's title, description, location, and date in the 'Edit Workshop' Page, which is accessible through the 'My Workshops' Page after hitting the edit button of workshops you are hosting.  
-
-My Workshops -> Edit
-<img src="/workspace/docs/images/workshop-my-workshops-ex.png">
-
-The save button calls the update method in workshop-update.service which uses the code in the example above to call the update API function.
-<img src="/workspace/docs/images/workshop-edit-ex.png">
-
  __Delete:__
  
 
