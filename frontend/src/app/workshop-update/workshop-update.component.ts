@@ -58,26 +58,54 @@ export class WorkshopUpdateComponent {
         let location = this.workshopUpdating$.location;
         let date = this.workshopUpdating$.date.toString();
 
-        if(!(form.title === null || form.title === "")) {
+        if(!(form.title === null || form.title === "" || form.title === undefined)) {
           let title = form.title;  
+
+          // this.workshopUpdateService
+          //   .updateWorkshop(this.workshopUpdating$.id, title, description, location, date)
+          //   .subscribe({
+          //     next: (workshop) => this.onSuccess(),
+          //     error: (err) => this.onError(err)
+          //   })
         }
-        if(!(form.description === null || form.description === "")) {
+        if(!(form.description === null || form.description === "" || form.description === undefined)) {
           let description = form.description;
+
+          // this.workshopUpdateService
+          //   .updateWorkshop(this.workshopUpdating$.id, title, description, location, date)
+          //   .subscribe({
+          //     next: (workshop) => this.onSuccess(),
+          //     error: (err) => this.onError(err)
+          //   })
         }
         if(!(form.date === null || form.date === "" || form.date === undefined)) {
           let date = form.date;
           date = date.toString();
+
+          // this.workshopUpdateService
+          //   .updateWorkshop(this.workshopUpdating$.id, title, description, location, date)
+          //   .subscribe({
+          //     next: (workshop) => this.onSuccess(),
+          //     error: (err) => this.onError(err)
+          //   })
         }
-        if(!(form.location === null || form.location === "")) {
+        if(!(form.location === null || form.location === "" || form.location === undefined)) {
           let location = form.location;
+
+          // this.workshopUpdateService
+          //   .updateWorkshop(this.workshopUpdating$.id, title, description, location, date)
+          //   .subscribe({
+          //     next: (workshop) => this.onSuccess(),
+          //     error: (err) => this.onError(err)
+          //   })
         }
 
         this.workshopUpdateService
-          .updateWorkshop(title, description, location, date)
+          .updateWorkshop(this.workshopUpdating$.id, title, description, location, date)
           .subscribe({
             next: (workshop) => this.onSuccess(),
             error: (err) => this.onError(err)
-        })
+          })
       }
       else {
         throwError(() => new Error("Workshop is null."));

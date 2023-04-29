@@ -32,8 +32,9 @@ export class WorkshopUpdateService {
         Error: No description provided.,
         Error: No location provided..
    */
-  updateWorkshop(title: String, description: String, location: String, date: string): Observable<Workshop>{
+  updateWorkshop(id: number, title: String, description: String, location: String, date: string): Observable<Workshop>{
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
+
     if(date === null || date === ""){
       return throwError(() => new Error("No date provided."));
     }
@@ -55,7 +56,7 @@ export class WorkshopUpdateService {
       location: location,
       date: dateAsDate
     }
-    let tempstring = '/api/workshop?workshop_id=' + this.workshop$?.id;
+    let tempstring = '/api/workshop?workshop_id=' + id;
     return this.http.put<Workshop>(tempstring, returnWorkshop);      
     }
    }
