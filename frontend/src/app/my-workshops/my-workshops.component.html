@@ -25,7 +25,8 @@
             <p></p>
 
             <mat-card-actions>
-                <button mat-raised-button type="button" (click)="deleteWorkshop(workshopHosting.id)">Delete</button>
+                <button mat-raised-button routerLink="/workshop-update" type="button" (click)="onEdit(workshopHosting)">Edit</button>                                
+                <button mat-raised-button type="button" (click)="deleteWorkshop(workshopHosting.id)">Delete</button>                
             </mat-card-actions>
         </mat-card>
     </mat-list>
@@ -51,13 +52,6 @@
             <mat-card-content>
                 {{workshopAttending.description}}
             </mat-card-content>
-
-            <!-- <p *ngIf="adminPermission$ | async"></p> -->
-
-            <mat-card-actions>
-                <!-- <button mat-raised-button type="button" (click)="registerUser(workshop.id)">Register</button>
-                <button mat-raised-button *ngIf="adminPermission$ | async" type="button" (click)="deleteWorkshop(workshop.id)">Delete</button> -->
-            </mat-card-actions>
         </mat-card>
     </mat-list>
 
