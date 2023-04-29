@@ -69,6 +69,7 @@ Example usage is in workshop-update.service file:
 This function allows a user to update the workshop's title, description, location, and date in the 'Edit Workshop' Page, which is accessible through the 'My Workshops' Page after hitting the edit button of workshops you are hosting.  
 
 My Workshops -> Edit
+![Image of My workshop page](/workspace/docs/images/workshop-my-workshops-ex.png)
 <img src="/workspace/docs/images/workshop-my-workshops-ex.png">
 
 The save button calls the update method in workshop-update.service which uses the code in the example above to call the update API function.
