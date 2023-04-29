@@ -1,1 +1,58 @@
-<p>my-workshops works!</p>
+<mat-card>
+
+    <!-- Hosting -->
+
+    <mat-list>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Hosting</h1>
+            </mat-card-title>
+        </mat-card-header>    
+
+        <mat-card *ngFor="let workshopHosting of workshopsHosting$ | async" style="background-color: #4D4D4D;">
+            <mat-card-header>
+                <mat-card-title>{{workshopHosting.title}}</mat-card-title>
+                <mat-card-subtitle>{{workshopHosting.location}}</mat-card-subtitle>
+                <mat-card-subtitle>{{workshopHosting.date| date:'M/dd/YY, h:mm a'}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <p></p>
+
+            <mat-card-content>
+                {{workshopHosting.description}}
+            </mat-card-content>
+
+            <p></p>
+
+            <mat-card-actions>
+                <button mat-raised-button routerLink="/workshop-update" type="button" (click)="onEdit(workshopHosting)">Edit</button>                                
+                <button mat-raised-button type="button" (click)="deleteWorkshop(workshopHosting.id)">Delete</button>                
+            </mat-card-actions>
+        </mat-card>
+    </mat-list>
+
+    <!-- Attending -->
+
+    <mat-list>
+        <mat-card-header>
+            <mat-card-title>
+                <h1>Attending</h1>
+            </mat-card-title>
+        </mat-card-header>    
+
+        <mat-card *ngFor="let workshopAttending of workshopsAttending$ | async" style="background-color: #4D4D4D;">
+            <mat-card-header>
+                <mat-card-title>{{workshopAttending.title}}</mat-card-title>
+                <mat-card-subtitle>{{workshopAttending.location}}</mat-card-subtitle>
+                <mat-card-subtitle>{{workshopAttending.date| date:'M/dd/YY, h:mm a'}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <p></p>
+
+            <mat-card-content>
+                {{workshopAttending.description}}
+            </mat-card-content>
+        </mat-card>
+    </mat-list>
+
+</mat-card>

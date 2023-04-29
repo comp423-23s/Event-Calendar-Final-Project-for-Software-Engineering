@@ -36,6 +36,7 @@ import { ProfileEditorComponent } from './profile/profile-editor/profile-editor.
 import { WorkshopListComponent } from './workshop-list/workshop-list.component';
 import { WorkshopCreateComponent } from './workshop-create/workshop-create.component';
 import { MyWorkshopsComponent } from './my-workshops/my-workshops.component';
+import { WorkshopUpdateComponent } from './workshop-update/workshop-update.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MyWorkshopsComponent } from './my-workshops/my-workshops.component';
     ProfileEditorComponent,
     WorkshopListComponent,
     WorkshopCreateComponent,
-    MyWorkshopsComponent
+    MyWorkshopsComponent,
+    WorkshopUpdateComponent
   ],
   imports: [
     BrowserModule,

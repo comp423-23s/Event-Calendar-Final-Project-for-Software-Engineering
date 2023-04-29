@@ -22,10 +22,8 @@
             <p *ngIf="adminPermission$ | async"></p>
 
             <mat-card-actions>
-                <!-- <button mat-raised-button type="button">Register</button> -->
-                <!-- <ng-template #authenticated> -->
+                <button mat-raised-button type="button" (click)="registerUser(workshop.id)">Register</button>
                 <button mat-raised-button *ngIf="adminPermission$ | async" type="button" (click)="deleteWorkshop(workshop.id)">Delete</button>
-                <!-- </ng-template> -->
             </mat-card-actions>
         </mat-card>
     </mat-list>

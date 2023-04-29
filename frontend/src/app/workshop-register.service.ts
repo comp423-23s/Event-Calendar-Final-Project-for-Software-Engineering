@@ -42,6 +42,7 @@ export class WorkshopRegisterService {
       None.
 
     */
-    return this.http.post<Workshop>("/api/workshop/register", {workshopId, userId});
+    let tempString = '/api/workshop/register?workshop_id=' + workshopId + '&attendee_id=' + userId
+    return this.http.post<Workshop>(tempString, {workshopId, userId});
   }
 }

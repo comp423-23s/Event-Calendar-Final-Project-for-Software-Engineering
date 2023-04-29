@@ -5,6 +5,7 @@
 
  We implemented everything you'd need to host workshops on the CSXL website. The first page we implemented is 'All Workshops' and is a list of all upcoming workshops. We enabled users to create workshops under the 'Create Workshops' page. When Administrators view this page, they also see a delete button that deletes that workshop. Users also have the option to register for a workshop! We also have a "my workshops" page where users can see what workshops they are hosting and attending. For workshops the user is hosting, they can delete and edit them. 
 
+
 ### High Level Functions
 
  __Create:__
@@ -25,6 +26,7 @@ Example usage in workshop-create.service file:
         host: user,
         attendees: []
       }
+
  return this.http.post<Workshop>('/api/workshop', returnWorkshop);
  ```
 This function allowed us to take data from a form, create a workshop object, and pass it to the FastApi.
@@ -42,6 +44,7 @@ return this.http.get<Workshop[]>("/api/workshop");
 This function allows the 'All Workshops' page to display all workshops currently in the database.
 
 <img src="/workspace/docs/images/workshop-list-example.png">
+
 
 __Update:__
 
@@ -75,6 +78,7 @@ The save button calls the update method in workshop-update.service which uses th
  
 
   This api deletes a workshop from the database. It takes in the id of the workshop to delete and uses workshop_service as a dependency. 
+
   ``` 
   @api.delete("", response_model=Workshop | None, tags=['Workshops']) 
   ```
@@ -121,10 +125,13 @@ Example from current database query:
 <img src="/workspace/docs/images/workshop-attendee-table-ex.png">
 
 
+
 ## Development Concerns
 To begin work on this app, you should first skim over the contents of the backend folders "models" and "entities", paying special attention to the workshop and user files in each folder. Next, you look at workshop.py in the backend api folder, and workshop.py in the backend services folder. All the functions called by the api can be found in this last file. You can find where they are called in the workshop.py file in the api folder. After you understand those files, we also suggest that you take a look at workshop-list.service, workshop-create.service, and workshop-delete.service. These files will give you a good sense and examples of how to use the Fast Api functions that have already been implemented. 
 
 
 
+
 ## Future Work
 We want to add the ability to see who is attending a workshop and limit the number of people who can attend. We also want to add a number of available spots in a workshop so users can see if the workshop is full.
+

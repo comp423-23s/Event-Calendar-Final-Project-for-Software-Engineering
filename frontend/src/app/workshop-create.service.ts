@@ -18,9 +18,9 @@ interface User{
 export interface Workshop {
   id: number,
   title: String;
-  description: String | null;
-  location: String | null;
-  date: Date | null;
+  description: String;
+  location: String;
+  date: Date;
   host_id: number | null
   host: User | null
   attendees: User[] | null;
@@ -60,20 +60,48 @@ export class WorkshopCreateService {
 
   createWorkshop(title: string, description: string, location: string, date: string, hostid: number, user: User): Observable<Workshop>{
     //Checks if date, title, or description is null, if not it converts it from a string to a Date object.
+    if(title === null || title === ""){
+      return throwError(() => new Error("No title provided"))
+    }
+    //checks if title is at least 5 characters
+    if (title.length < 5){
+      return throwError(() => new Error("Title must be at least five characters long"));
+    }
+    //checks that title is not all white space
+    if(this.isWhiteSpace(title)){
+      return throwError(() => new Error("title cannot be all white space"))
+    }
+    //makes sure date is provided
     if(date === null || date === ""){
       return throwError(() => new Error("No date provided."));
     }
     else{
       let dateAsDate: Date = new Date(date);
     
+    //makes sure a description is provided
     if(description === null || description === ""){
       return throwError(() => new Error("No description provided."));
     }
-
+    //makes sure the description is at least 5 characters long
+    if(description.length < 5){
+      return throwError(() => new Error("The description must be at least 5 characters long"))
+    }
+    //makes sure the description is not all white space
+    if(this.isWhiteSpace(description)){
+      return throwError(() => new Error("description cannot be all white space"))
+    }
+    //makes sure there is a location
     if(location === null || location === ""){
       return throwError(() => new Error("No location provided."));
     }
-
+    //ensures the location is at least 4 characters long
+    if(location.length < 4){
+      return throwError(() => new Error("The location must be at least 4 characters long"))
+    }
+    //makes sure the location is not all white space
+    if(this.isWhiteSpace(location)){
+      return throwError(() => new Error("location cannot be all white space"))
+    }
     //if hostID is null or undefined an error is thrown.
     if (hostid == null || hostid ==undefined){
       return throwError(() => new Error("Profile ID is either null or undefined."));
@@ -98,4 +126,21 @@ export class WorkshopCreateService {
    getProfileSub(): Observable<Profile>{
     return this.http.get<Profile>('/api/profile');
    }
+
+  //takes in a string. Returns true if the string is all white space, false if it isn't
+  isWhiteSpace(string: String){
+    let white_space:boolean  = true;
+    for(let i = 0; i < string.length; i++ ){
+      if(string.charAt(i) == " " || string.charAt(i) == "  "){
+        continue
+      }
+      else{ 
+        white_space = false;
+      }
+    }
+    if(white_space == true){
+      return true
+    }
+    return false
+  }
   }
